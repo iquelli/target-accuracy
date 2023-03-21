@@ -1,13 +1,15 @@
 // Target class (position and width)
 class Target
 {
-  constructor(x, y, w, l, id)
+  constructor(x, y, w, h, l, id, colour)//ACRESCETEI COR E ALTURA DO ALVO
   {
     this.x      = x;
     this.y      = y;
     this.width  = w;
+    this.height = h;
     this.label  = l;
     this.id     = id;
+    this.colour = colour
   }
   
   // Checks if a mouse click took place
@@ -21,14 +23,14 @@ class Target
   // and its label
   draw()
   {
-    // Draw target
-    fill(color(155,155,155));                 
-    circle(this.x, this.y, this.width);
+    // Draw target --MUDEI DE CIRCULO PRA RETANGULO E AJUSTEI A POSICAO
+    fill(this.colour);             
+    rect(this.x-this.width/2, this.y-this.height/2, this.width, this.height, 20); //20-> round edges
     
     // Draw label
     textFont("Arial", 12);
     fill(color(255,255,255));
-    textAlign(CENTER);
+    textAlign(CENTER, CENTER); //CENTREI ISTO
     text(this.label, this.x, this.y);
   }
 }
