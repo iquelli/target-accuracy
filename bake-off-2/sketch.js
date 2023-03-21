@@ -29,6 +29,23 @@ let trials;                         // contains the order of targets that activa
 let current_trial         = 0;      // the current trial number (indexes into trials array above)
 let attempt               = 0;      // users complete each test twice to account for practice (attemps 0 and 1)
 
+
+// Colours
+let WHITE = color(0,0,0);
+let BLACK = color(255,255,255);
+let GREY = color(215,215,215);
+let BLUE = color(164, 243, 248);
+let DARK_GREEN = color(185,231,169);
+let LIGHT_GREEN = color(200,255,157);
+let YELLOW = color(246,253,164);
+let ORANGE = color(255,217,172);
+let PEACH = color(255,190,153);
+let RED = color(255,165,169);
+let PINK = color(255,165,214);
+let PURPLE = color(200,181,255);
+let BROWN = color(222,206,194);
+let FUSCHIA = color(227,182,285);
+
 // Target list
 let targets               = [];
 
