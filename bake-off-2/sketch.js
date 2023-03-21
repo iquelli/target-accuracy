@@ -29,6 +29,9 @@ let trials;                         // contains the order of targets that activa
 let current_trial         = 0;      // the current trial number (indexes into trials array above)
 let attempt               = 0;      // users complete each test twice to account for practice (attemps 0 and 1)
 
+// Common variables
+const NUMBER_CATEGORIES = 10; 
+
 // Colours
 let WHITE = color(0,0,0);
 let BLACK = color(255,255,255);
@@ -58,7 +61,7 @@ function preload()
   legendas = loadTable('legendas.csv', 'csv', 'header');
 
   // loads images
-  for (let i = 0; i<10; i++) {
+  for (let i = 0; i<NUMBER_CATEGORIES; i++) {
     let number = i + 1;
     images[i] = loadImage('images/category' + number + '.jpg');
   }
@@ -90,7 +93,7 @@ function draw()
 
     // Draw all targets
 	  for (var i = 0; i < legendas.getRowCount(); i++) targets[i].draw();
-    for (var i = 0; i < 10; i++) categories[i].draw();
+    for (var i = 0; i<NUMBER_CATEGORIES; i++) categories[i].draw();
 
     // Draw the target label to be selected in the current trial
     textFont('Roboto', 20);
@@ -217,7 +220,7 @@ function continueTest()
 
 function createCategories(circle_size)
 {
-  for(let i = 0; i < 10; i++) {
+  for(let i = 0; i<NUMBER_CATEGORIES; i++) {
     let category_x = 20; // TODO valores a alterar
     let category_y = 20; // como calcular posição?
 
