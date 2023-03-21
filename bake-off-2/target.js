@@ -1,13 +1,15 @@
 // Target class (position and width)
+
 class Target
 {
-  constructor(x, y, w, l, id)
+  constructor(x, y, w, h, l, id)
   {
     this.x      = x;
     this.y      = y;
     this.width  = w;
+    this.height = h;
     this.label  = l;
-    this.id     = id;
+    this.id     = id; 
   }
   
   // Checks if a mouse click took place
@@ -21,13 +23,14 @@ class Target
   // and its label
   draw()
   {
+    
     // Draw target
     fill(color(155,155,155));                 
-    circle(this.x, this.y, this.width);
+    rect(this.x, this.y, this.width, this.height, round_edge);
     
     // Draw label
-    textFont("Arial", 12);
-    fill(color(255,255,255));
+    textFont('Roboto', 12);
+    fill(color(0,0,0));
     textAlign(CENTER);
     text(this.label, this.x, this.y);
   }

@@ -77,7 +77,7 @@ function startTest()
     student_ID_label.remove();
     display_size_form.remove();
     display_size_label.remove();
-    start_button.remove();  
+    start_button.remove();
 
     // Goes fullscreen and starts test
     fullscreen(!fullscreen());
