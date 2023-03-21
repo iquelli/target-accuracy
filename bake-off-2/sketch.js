@@ -29,7 +29,6 @@ let trials;                         // contains the order of targets that activa
 let current_trial         = 0;      // the current trial number (indexes into trials array above)
 let attempt               = 0;      // users complete each test twice to account for practice (attemps 0 and 1)
 
-
 // Colours
 let WHITE = color(0,0,0);
 let BLACK = color(255,255,255);
@@ -46,11 +45,12 @@ let PURPLE = color(200,181,255);
 let BROWN = color(222,206,194);
 let FUSCHIA = color(227,182,285);
 
-// Target list
-let targets               = [];
-
-// Images list
-let images                = []; 
+// Lists
+let targets               = [];     // Target list
+let categories              = [];     // Category List
+let images                = [];     // Images list
+let labels = ["Citrinos", "Frutas P-", "Maçã/Pera", "Outras Frutas", "Sumos", "Condimentos", "Leite", 
+              "Outros Vegetais", "Tomates e Vegetais Verdes", "Iogurte/Natas"]
 
 // Ensures important data is loaded before the program starts
 function preload()
@@ -90,6 +90,7 @@ function draw()
 
     // Draw all targets
 	  for (var i = 0; i < legendas.getRowCount(); i++) targets[i].draw();
+    for (var i = 0; i < 10; i++) categories[i].draw();
 
     // Draw the target label to be selected in the current trial
     textFont('Roboto', 20);
@@ -216,7 +217,13 @@ function continueTest()
 
 function createCategories(circle_size)
 {
+  for(let i = 0; i < 10; i++) {
+    let category_x = 20; // TODO valores a alterar
+    let category_y = 20; // como calcular posição?
 
+    let category = new Category(category_x, category_y, circle_size, images[i], labels[i]);
+    categories.push(category);
+  }
 }
 
 // Creates and positions the UI targets
