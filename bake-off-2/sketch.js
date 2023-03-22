@@ -12,7 +12,7 @@ const RECORD_TO_FIREBASE  = false;  // Set to 'true' to record user results to F
 // Pixel density and setup variables (DO NOT CHANGE!)
 let PPI, PPCM;
 const NUM_OF_TRIALS       = 12;      // The numbers of trials (i.e., target selections) to be completed
-const GRID_ROWS           = 2;      // We divide our non fruit targets in a 2x3 grid
+const GRID_ROWS           = 3;      // We divide our non fruit targets in a 2x3 grid
 const GRID_COLUMNS        = 3;     // We divide our non fruit targets in a 2x3 grid
 let continue_button;
 let legendas;                       // The item list from the "legendas" CSV
@@ -30,7 +30,7 @@ let current_trial         = 0;      // the current trial number (indexes into tr
 let attempt               = 0;      // users complete each test twice to account for practice (attemps 0 and 1)
 
 // Common variables
-const NUMBER_CATEGORIES = 10; 
+const NUMBER_CATEGORIES = 9; 
 
 // Colours
 //let WHITE = color(0,0,0);
@@ -220,37 +220,20 @@ function continueTest()
 
 function createCategories(circle_size, horizontal_gap, vertical_gap)
 {
-    // Define the margins between targets by dividing the white space 
-    // for the number of targets minus one
-    let h_margin = horizontal_gap / (GRID_COLUMNS + 1);
-    let v_margin = vertical_gap / (GRID_ROWS);
-
-    // sets the first row of circles (which is a 1x4 grid)
-    for(var c = 0; c <= GRID_COLUMNS; c++) 
-    {
-      let category_x = 100 + circle_size%2 + (circle_size + h_margin)*c;
-      let category_y = 100 + circle_size%2;
-
-      let category = new Category(category_x, category_y, circle_size, images[c], labels[c]);
-      categories.push(category)
-    }
-
-    // Define the margins between targets by dividing the white space 
-    // for the number of targets minus one
-    h_margin = horizontal_gap / (GRID_COLUMNS);
-
-    var i = 3;
-    print(h_margin)
-    // sets the second and third row of circles (which is a 2x3 grid)
-    for(var r = 1; r < GRID_ROWS + 1; r++) 
+    h_margin = horizontal_gap / (GRID_COLUMNS - 1);
+    v_margin = vertical_gap / (GRID_ROWS - 1);
+  
+    var i = 0;
+    // sets the categories (which is a 3x3 grid)
+    for(var r = 0; r < GRID_ROWS; r++) 
     {
       for (var c = 0; c < GRID_COLUMNS; c++) 
       {
-        let category_x = 200 + circle_size%2 + (circle_size + h_margin)*c;
+        let category_x = 150 + circle_size%2 + (circle_size%2 + h_margin)*c;
         let category_y = 100 + circle_size%2 + (v_margin)*r;
 
         i++;
-        let category = new Category(category_x, category_y, circle_size, images[i], labels[i]);
+        let category = new Category(category_x, category_y, circle_size, images[i-1], labels[i-1]);
         categories.push(category);
       }
     }
