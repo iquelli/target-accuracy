@@ -246,7 +246,7 @@ function createCategories(circle_size, horizontal_gap, vertical_gap)
         let category_y = 100 + circle_size%2 + (v_margin)*r;
 
         i++;
-        let category = new Category(category_x, category_y, circle_size, images[i-1], labels[i-1]);
+        let category = new Category(category_x, category_y, circle_size, images[i-1], labels[i-1], target_labels[i-1]); //assim tmb ja sao enviados os targets
         categories.push(category);
       }
     }
