@@ -49,11 +49,11 @@ const NUMBER_CATEGORIES = 10;
 //let FUSCHIA = color(227,182,285);
 
 // Lists
-let targets               = [];     // Target list
-let categories              = [];     // Category List
-let images                = [];     // Images list
-let labels = ["Citrinos", "Frutas P-", "Maçã/Pera", "Outras Frutas", "Sumos", "Condimentos", "Leite", 
-              "Outros Vegetais", "Tomates e Vegetais Verdes", "Iogurte/Natas"]
+let targets                = [];     // Target list
+let categories             = [];     // Category List
+let images                 = [];     // Images list
+let labels = ["Citrinos", "Frutas P-", "Maçã/Pera", "Outras Frutas", "Sumos", "Condimentos",
+              "Leite", "Outros Vegetais", "Tomates e Vegetais Verdes", "Iogurte/Natas"]
 
 // Ensures important data is loaded before the program starts
 function preload()
@@ -61,7 +61,8 @@ function preload()
   legendas = loadTable('legendas.csv', 'csv', 'header');
 
   // loads images
-  for (let i = 0; i<NUMBER_CATEGORIES; i++) {
+  for (let i = 0; i<NUMBER_CATEGORIES; i++)
+  {
     let number = i + 1;
     images[i] = loadImage('images/category' + number + '.jpg');
   }
@@ -225,10 +226,10 @@ function createCategories(circle_size, horizontal_gap, vertical_gap)
     let v_margin = vertical_gap / (GRID_ROWS - 1);
 
     // sets the first row of circles (which is a 1x4 grid)
-    for(var c = 0; c <= GRID_COLUMNS; i++) 
+    for(var c = 0; c <= GRID_COLUMNS; c++) 
     {
       let category_x = 100 + (h_margin + circle_size) * c + circle_size/2;
-      let category_y = 40 + (v_margin + circle_size) * r + circle_size/2;
+      let category_y = 40 + (v_margin + circle_size) + circle_size/2;
 
       let category = new Category(category_x, category_y, circle_size, images[c], labels[c]);
       categories.push(category)
