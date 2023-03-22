@@ -222,14 +222,14 @@ function createCategories(circle_size, horizontal_gap, vertical_gap)
 {
     // Define the margins between targets by dividing the white space 
     // for the number of targets minus one
-    let h_margin = horizontal_gap / (GRID_COLUMNS);
-    let v_margin = vertical_gap / (GRID_ROWS - 1);
+    let h_margin = horizontal_gap / (GRID_COLUMNS + 1);
+    let v_margin = vertical_gap / (GRID_ROWS);
 
     // sets the first row of circles (which is a 1x4 grid)
     for(var c = 0; c <= GRID_COLUMNS; c++) 
     {
-      let category_x = 40 + circle_size%2 + circle_size*c;
-      let category_y = 40 + circle_size%2;
+      let category_x = 100 + circle_size%2 + (circle_size + h_margin)*c;
+      let category_y = 100 + circle_size%2;
 
       let category = new Category(category_x, category_y, circle_size, images[c], labels[c]);
       categories.push(category)
@@ -237,16 +237,17 @@ function createCategories(circle_size, horizontal_gap, vertical_gap)
 
     // Define the margins between targets by dividing the white space 
     // for the number of targets minus one
-    h_margin = horizontal_gap / (GRID_COLUMNS -1);
+    h_margin = horizontal_gap / (GRID_COLUMNS);
 
     var i = 3;
+    print(h_margin)
     // sets the second and third row of circles (which is a 2x3 grid)
     for(var r = 1; r < GRID_ROWS + 1; r++) 
     {
       for (var c = 0; c < GRID_COLUMNS; c++) 
       {
-        let category_x = 40 + circle_size%2 + circle_size*c;
-        let category_y = 40 + circle_size%2 + circle_size*r;
+        let category_x = 200 + circle_size%2 + (circle_size + h_margin)*c;
+        let category_y = 100 + circle_size%2 + (v_margin)*r;
 
         i++;
         let category = new Category(category_x, category_y, circle_size, images[i], labels[i]);
@@ -276,12 +277,12 @@ function windowResized()
     let horizontal_gap = screen_width - target_width * GRID_COLUMNS;// empty space in cm across the x-axis (based on 10 targets per row)
     let vertical_gap   = screen_height - target_height * GRID_ROWS;  // empty space in cm across the y-axis (based on 8 targets per column)
 
-    let circle_size    = 4;                                // size of category's circle
+    let circle_size    = 3;                                // size of category's circle
     let target_size    = 2; 
 
     // Creates and positions the UI targets according to the white space defined above (in cm!)
     // 80 represent some margins around the display (e.g., for text)
-    createCategories(circle_size * PPCM, horizontal_gap * PPCM - 80, vertical_gap * PPCM - 80);
+    createCategories(circle_size * PPCM, horizontal_gap * PPCM - 200, vertical_gap * PPCM - 200);
 
     // Starts drawing targets immediately after we go fullscreen
     draw_targets = true;
