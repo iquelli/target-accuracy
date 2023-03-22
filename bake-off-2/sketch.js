@@ -228,8 +228,8 @@ function createCategories(circle_size, horizontal_gap, vertical_gap)
     // sets the first row of circles (which is a 1x4 grid)
     for(var c = 0; c <= GRID_COLUMNS; c++) 
     {
-      let category_x = 100 + (h_margin + circle_size) * c + circle_size/2;
-      let category_y = 40 + (v_margin + circle_size) + circle_size/2;
+      let category_x = 40 + circle_size%2 + circle_size*c;
+      let category_y = 40 + circle_size%2;
 
       let category = new Category(category_x, category_y, circle_size, images[c], labels[c]);
       categories.push(category)
@@ -245,14 +245,15 @@ function createCategories(circle_size, horizontal_gap, vertical_gap)
     {
       for (var c = 0; c < GRID_COLUMNS; c++) 
       {
-        let category_x = 100 + (h_margin + circle_size) * c + circle_size/2;
-        let category_y = 40 + (v_margin + circle_size) * r + circle_size/2;
+        let category_x = 40 + circle_size%2 + circle_size*c;
+        let category_y = 40 + circle_size%2 + circle_size*r;
 
         i++;
         let category = new Category(category_x, category_y, circle_size, images[i], labels[i]);
         categories.push(category);
       }
     }
+
 }
 
 // Is invoked when the canvas is resized (e.g., when we go fullscreen)
@@ -275,7 +276,8 @@ function windowResized()
     let horizontal_gap = screen_width - target_width * GRID_COLUMNS;// empty space in cm across the x-axis (based on 10 targets per row)
     let vertical_gap   = screen_height - target_height * GRID_ROWS;  // empty space in cm across the y-axis (based on 8 targets per column)
 
-    let circle_size    = 10;                                // size of category's circle
+    let circle_size    = 4;                                // size of category's circle
+    let target_size    = 2; 
 
     // Creates and positions the UI targets according to the white space defined above (in cm!)
     // 80 represent some margins around the display (e.g., for text)
