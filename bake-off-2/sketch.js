@@ -12,8 +12,8 @@ const RECORD_TO_FIREBASE  = false;  // Set to 'true' to record user results to F
 // Pixel density and setup variables (DO NOT CHANGE!)
 let PPI, PPCM;
 const NUM_OF_TRIALS       = 12;      // The numbers of trials (i.e., target selections) to be completed
-const GRID_ROWS           = 8;      // We divide our 80 targets in a 8x10 grid
-const GRID_COLUMNS        = 10;     // We divide our 80 targets in a 8x10 grid
+const GRID_ROWS           = 2;      // We divide our non fruit targets in a 2x3 grid
+const GRID_COLUMNS        = 3;     // We divide our non fruit targets in a 2x3 grid
 let continue_button;
 let legendas;                       // The item list from the "legendas" CSV
 
@@ -92,7 +92,6 @@ function draw()
     text("Trial " + (current_trial + 1) + " of " + trials.length, 50, 20);
 
     // Draw all targets
-	  for (var i = 0; i < legendas.getRowCount(); i++) targets[i].draw();
     for (var i = 0; i<NUMBER_CATEGORIES; i++) categories[i].draw();
 
     // Draw the target label to be selected in the current trial
@@ -218,44 +217,41 @@ function continueTest()
   draw_targets = true; 
 }
 
-function createCategories(circle_size)
+function createCategories(circle_size, horizontal_gap, vertical_gap)
 {
-  for(let i = 0; i<NUMBER_CATEGORIES; i++) {
-    let category_x = 20; // TODO valores a alterar
-    let category_y = 20; // como calcular posição?
+    // Define the margins between targets by dividing the white space 
+    // for the number of targets minus one
+    let h_margin = horizontal_gap / (GRID_COLUMNS);
+    let v_margin = vertical_gap / (GRID_ROWS - 1);
 
-    let category = new Category(category_x, category_y, circle_size, images[i], labels[i]);
-    categories.push(category);
-  }
-}
-
-// Creates and positions the UI targets
-function createTargets(target_width, target_height, horizontal_gap, vertical_gap)
-{
-  // Define the margins between targets by dividing the white space 
-  // for the number of targets minus one
-  h_margin = horizontal_gap / (GRID_COLUMNS -1);
-  v_margin = vertical_gap / (GRID_ROWS - 1);
-  
-  // Set targets in a 8 x 10 grid
-  for (var r = 0; r < GRID_ROWS; r++)
-  {
-    for (var c = 0; c < GRID_COLUMNS; c++)
+    // sets the first row of circles (which is a 1x4 grid)
+    for(var c = 0; c <= GRID_COLUMNS; i++) 
     {
-      let target_x = 40 + (h_margin + target_width) * c + target_width/2;        // give it some margin from the left border
-      let target_y = (v_margin + target_height) * r + target_height/2;
-      
-      // Find the appropriate label and ID for this target
-      let legendas_index = c + GRID_COLUMNS * r;
-      let target_label = legendas.getString(legendas_index, 0);
-      let target_id = legendas.getNum(legendas_index, 1);  
-      
-      let default_colour= color(155,155,155); //TO CHANGE!-SO PRA N PERDER A COR ORIGINAL
-      
-      let target = new Target(target_x, target_y + 40, target_width, target_height, target_label, target_id, default_colour);
-      targets.push(target);
-    }  
-  }
+      let category_x = 100 + (h_margin + circle_size) * c + circle_size/2;
+      let category_y = 40 + (v_margin + circle_size) * r + circle_size/2;
+
+      let category = new Category(category_x, category_y, circle_size, images[c], labels[c]);
+      categories.push(category)
+    }
+
+    // Define the margins between targets by dividing the white space 
+    // for the number of targets minus one
+    h_margin = horizontal_gap / (GRID_COLUMNS -1);
+
+    var i = 3;
+    // sets the second and third row of circles (which is a 2x3 grid)
+    for(var r = 1; r < GRID_ROWS + 1; r++) 
+    {
+      for (var c = 0; c < GRID_COLUMNS; c++) 
+      {
+        let category_x = 100 + (h_margin + circle_size) * c + circle_size/2;
+        let category_y = 40 + (v_margin + circle_size) * r + circle_size/2;
+
+        i++;
+        let category = new Category(category_x, category_y, circle_size, images[i], labels[i]);
+        categories.push(category);
+      }
+    }
 }
 
 // Is invoked when the canvas is resized (e.g., when we go fullscreen)
@@ -278,13 +274,11 @@ function windowResized()
     let horizontal_gap = screen_width - target_width * GRID_COLUMNS;// empty space in cm across the x-axis (based on 10 targets per row)
     let vertical_gap   = screen_height - target_height * GRID_ROWS;  // empty space in cm across the y-axis (based on 8 targets per column)
 
-    let circle_size    = 5;                                // size of category's circle
+    let circle_size    = 10;                                // size of category's circle
 
     // Creates and positions the UI targets according to the white space defined above (in cm!)
     // 80 represent some margins around the display (e.g., for text)
-    createTargets(target_size * PPCM, horizontal_gap * PPCM - 80, vertical_gap * PPCM - 80);
-    createCategories(circle_size * PPCM);
-    createTargets(target_width * PPCM, target_height * PPCM, horizontal_gap * PPCM - 80, vertical_gap * PPCM - 80);
+    createCategories(circle_size * PPCM, horizontal_gap * PPCM - 80, vertical_gap * PPCM - 80);
 
     // Starts drawing targets immediately after we go fullscreen
     draw_targets = true;

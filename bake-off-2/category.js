@@ -1,5 +1,6 @@
 // Category Class 
 
+// TODO adicionar método para adicionar target
 class Category
 {
     constructor(x, y, r, i, l)
@@ -17,15 +18,14 @@ class Category
 
         // Draw category circle
         let mask1 = createGraphics(this.radius, this.radius);
-        mask1.circle(this.radius%2, this.radius%2, this.radius);
+        mask1.circle(this.radius%2, this.radius%2, this.radius - 10);
         this.img.mask(mask1);
         image(img, this.x, this.y);
        
         // Draw label
-        textFont('Roboto', 12);
+        textFont('Roboto', 32);
         fill(color(0,0,0));
         textStyle(BOLD);
-        textAlign(CENTER, BOTTOM);
-        text(this.label, this.x, this.y);
+        text(this.label, this.x, this.y + this.y%2 + this.y%3);
     }
 }
