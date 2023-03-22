@@ -55,6 +55,19 @@ let images                 = [];     // Images list
 let labels = ["Citrinos", "Frutas P-", "Maçã/Pera", "Outras Frutas", "Sumos", "Condimentos",
               "Leite", "Outros Vegetais", "Tomates e Vegetais Verdes", "Iogurte/Natas"]
 
+//VETORES DE LABELS COM OS ID'S 
+let frutas_AK_id = [];
+let frutas_LPe_id = [];
+let frutas_PiW_id = [];
+let condimentos_id = [];
+let tomate_verduras_id = [];
+let outros_vegetais_id = [];
+let sumos_id = [];
+let leite_id = [];
+let iogurtes_natas_id = [];
+let target_labels=[frutas_AK_id, frutas_LPe_id, frutas_PiW_id, condimentos_id, tomate_verduras_id,
+outros_vegetais_id, sumos_id, leite_id, iogurtes_natas_id]; //VETOR COM OS VETORES
+
 // Ensures important data is loaded before the program starts
 function preload()
 {
