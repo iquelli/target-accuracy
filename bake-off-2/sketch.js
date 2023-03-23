@@ -34,26 +34,26 @@ const NUMBER_CATEGORIES = 9;
 const NUMBER_TARGETS = 80;
 
 // Colours
-const WHITE = color(0,0,0);
-const BLACK = color(255,255,255);
-const GREY = color(215,215,215);
-const BLUE = color(164, 243, 248);
-const DARK_GREEN = color(185,231,169);
-const LIGHT_GREEN = color(200,255,157);
-const YELLOW = color(246,253,164);
-const ORANGE = color(255,217,172);
-const PEACH = color(255,190,153);
-const RED = color(255,165,169);
-const PINK = color(255,165,214);
-const PURPLE = color(200,181,255);
-const BROWN = color(222,206,194);
-const FUSCHIA = color(227,182,285);
+//const WHITE = color(0,0,0);
+//const BLACK = color(255,255,255);
+//const GREY = color(215,215,215);
+//const BLUE = color(164, 243, 248);
+//const DARK_GREEN = color(185,231,169);
+//const LIGHT_GREEN = color(200,255,157);
+//const YELLOW = color(246,253,164);
+//const ORANGE = color(255,217,172);
+//const PEACH = color(255,190,153);
+//const RED = color(255,165,169);
+//const PINK = color(255,165,214);
+//const PURPLE = color(200,181,255);
+//const BROWN = color(222,206,194);
+//const FUSCHIA = color(227,182,285);
 
 // Categories
 const A_K = [20, 5, 6, 11, 21, 12, 0, 1, 22, 7];
 const L_Pe = [8, 9, 10, 13, 15, 16, 17, 18, 19];
 const Pi_W = [23, 2, 24, 25, 26, 3, 4, 27, 14];
-const Condimentos = [68, 71, 69, 63, 64, 70];
+const Condimentos = [68, 71, -1,-1,-1, 69, 63, 64, 70];
 const TomateVerduras = [58, 76, 77, 78, 79, 65, 62, 60];
 const OutrosVegetais = [59, 61, 66, 75, 67, 73, 74, 72];
 const Sumos = [28, 34, 33, 36, 31, 29, 32, 30, 35];
@@ -61,8 +61,7 @@ const Leite = [37, 42, 41, 50, 39, 44, 47, 51, 40, 38];
 const IogurteNatas = [45, 48, 49, 43, 46, 57, 56, 55, 52, 54, 53];
 
 // List of Categories
-const catList = [A_K, L_Pe, Pi_W, Condimentos, TomateVerduras, OutrosVegetais,
-                Sumos, Leite, IogurteNatas]
+let catList = [A_K, L_Pe, Pi_W, Condimentos, TomateVerduras, OutrosVegetais,Sumos, Leite, IogurteNatas]
 
 // Lists
 let targets                = [];     // Target list
@@ -236,18 +235,35 @@ function continueTest()
   draw_targets = true; 
 }
 
-function createTargets(category_number, cat_x, cat_y, width, height) {
+function createTargets(category_number, cat_x, cat_y, cat_size, width, height) {
+  let target_y, target_x;
+  let GREY = color(100);
+  let cs;//num of targets in category pra por as coisas uniformemente a volta do circulo
+    if (category_number===0||category_number===7){
+      cs=10;
+    }
+    if (category_number===1||category_number===2 ||category_number===3 || category_number===6){
+      cs=9;
+    }
+    if (category_number===4||category_number===5){
+      cs=8;
+    }
+    if (category_number===8){
+      cs=11;
+    }
   
-  // TODO completar para fazer posições as targets à volta de cat_x e cat_y
-  for(var i = 0; i < 10; i++) {
+  for(var i = 0; i < cs; i++) {
 
     // ALGORITMO PARA CALCULAR DIFERENTES POSIÇÕES AQUI
-    target_x = cat_x;
-    target_y = cat_y;
+    target_x = cat_x+cat_size*(0.05*3*cs)*cos(-(cs-i*(2*PI/cs))+5.5*PI/8);
+    target_y = cat_y+cat_size*sin(-(cs-i*(2*PI/cs))+5.5*PI/8);
 
-    let label_id = catList[category_number][i]
-    let target = new Target(target_x, target_y, width, height,legendas.getString(label_id, 0), label_id, colors[label_id]);
-    targets.push(target);
+    let label_id = catList[category_number][i];
+    if (label_id!=-1){
+      let target_label = legendas.getString(label_id, 0);
+      let target = new Target(target_x, target_y, width, height,target_label, label_id, GREY);
+      targets.push(target);
+    }
   }
 }
 
@@ -256,19 +272,19 @@ function createCategories(circle_size, horizontal_gap, vertical_gap, target_widt
     h_margin = horizontal_gap / (GRID_COLUMNS - 1);
     v_margin = vertical_gap / (GRID_ROWS - 1);
   
-    var i = 0;
+    let i = 0;
     // sets the categories (which is a 3x3 grid)
-    for(var r = 0; r < GRID_ROWS; r++) 
+    for(let r = 0; r < GRID_ROWS; r++) 
     {
-      for (var c = 0; c < GRID_COLUMNS; c++) 
+      for (let c = 0; c < GRID_COLUMNS; c++) 
       {
         let category_x = 150 + circle_size%2 + (circle_size%2 + h_margin)*c;
         let category_y = 100 + circle_size%2 + (v_margin)*r;
 
-        createTargets(r+c, category_x, category_y, target_width, target_height)
+        createTargets(r+3*c, category_x+circle_size*0.5, category_y+circle_size*0.5, circle_size, target_width, target_height); //pra enviar como referencia o centro
 
         i++;
-        let category = new Category(category_x, category_y, circle_size, images[i-1], labels[i-1]); //assim tmb ja sao enviados os targets
+        let category = new Category(category_x, category_y, circle_size, images[i-1], labels[i-1]); s
         categories.push(category);
       }
     }
@@ -290,13 +306,12 @@ function windowResized()
     // Below we find out out white space we can have between 2 cm targets
     let screen_width   = display.width * 2.54;             // screen width
     let screen_height  = display.height * 2.54;            // screen height
-    let target_width    = 2;                                // sets the target size (will be converted to cm when passed to createTargets)
-    let target_height    = 1; //ALTURA DO ALVO 
+    let circle_size    = 2.5;                                // size of category's circle
+
+    let target_width    = 2.2;                                // sets the target size (will be converted to cm when passed to createTargets)
+    let target_height    = 0.8; //ALTURA DO ALVO 
     let horizontal_gap = screen_width - target_width * GRID_COLUMNS;// empty space in cm across the x-axis (based on 10 targets per row)
     let vertical_gap   = screen_height - target_height * GRID_ROWS;  // empty space in cm across the y-axis (based on 8 targets per column)
-
-    let circle_size    = 2.5;                                // size of category's circle
-    let target_size    = 2; 
 
     // Creates and positions the UI targets according to the white space defined above (in cm!)
     // 80 represent some margins around the display (e.g., for text)
