@@ -33,22 +33,6 @@ let attempt               = 0;      // users complete each test twice to account
 const NUMBER_CATEGORIES = 9;
 const NUMBER_TARGETS = 80;
 
-// Colours
-//const WHITE = color(0,0,0);
-//const BLACK = color(255,255,255);
-//const GREY = color(215,215,215);
-//const BLUE = color(164, 243, 248);
-//const DARK_GREEN = color(185,231,169);
-//const LIGHT_GREEN = color(200,255,157);
-//const YELLOW = color(246,253,164);
-//const ORANGE = color(255,217,172);
-//const PEACH = color(255,190,153);
-//const RED = color(255,165,169);
-//const PINK = color(255,165,214);
-//const PURPLE = color(200,181,255);
-//const BROWN = color(222,206,194);
-//const FUSCHIA = color(227,182,285);
-
 // Categories
 const A_K = [20, 5, 6, 11, 21, 12, 0, 1, 22, 7];
 const L_Pe = [8, 9, 10, 13, 15, 16, 17, 18, 19];
@@ -103,7 +87,7 @@ function draw()
     background(color(255,255,255));        // sets background to white
     
     // Print trial count at the top left-corner of the canvas
-    textFont('Roboto', 16);
+    textFont('Helvetica', 16);
     fill(color(0,0,0));
     textAlign(LEFT);
     text("Trial " + (current_trial + 1) + " of " + trials.length, 50, 20);
@@ -113,7 +97,7 @@ function draw()
     for (var i = 0; i<NUMBER_TARGETS; i++) targets[i].draw();
 
     // Draw the target label to be selected in the current trial
-    textFont('Roboto', 20);
+    textFont('Arial', 20);
     textAlign(CENTER);
     text(legendas.getString(trials[current_trial],0), width/2, height - 20);
   }
@@ -236,8 +220,37 @@ function continueTest()
 }
 
 function createTargets(category_number, cat_x, cat_y, cat_size, width, height) {
+  // Colours
+  WHITE = color(0,0,0);
+  BLACK = color(255,255,255);
+  GREY = color(215,215,215);
+  BLUE = color(164, 243, 248);
+  DARK_GREEN = color(185,231,169);
+  LIGHT_GREEN = color(200,255,157);
+  YELLOW = color(246,253,164);
+  ORANGE = color(255,217,172);
+  PEACH = color(255,190,153);
+  RED = color(255,165,169);
+  PINK = color(255,165,214);
+  PURPLE = color(200,181,255);
+  BROWN = color(222,206,194);
+  FUSCHIA = color(227,182,285);
+  
+  let cA_K = [DARK_GREEN,DARK_GREEN, YELLOW, YELLOW, YELLOW, BLUE, BLUE, BLUE, LIGHT_GREEN, LIGHT_GREEN];
+let cL_Pe = [YELLOW, DARK_GREEN, LIGHT_GREEN, LIGHT_GREEN, PEACH, ORANGE, ORANGE, PURPLE, PEACH];
+let cPi_W = [YELLOW, YELLOW, PURPLE, FUSCHIA, RED, RED, RED, ORANGE, BLUE];
+let cCondimentos = [GREY, GREY, -1,-1,-1, GREY, YELLOW, YELLOW, YELLOW];
+let cTomateVerduras = [DARK_GREEN, RED, RED, RED, DARK_GREEN, DARK_GREEN, DARK_GREEN, DARK_GREEN];
+let cOutrosVegetais = [PURPLE, ORANGE, GREY, RED, YELLOW, BROWN, BROWN, BROWN];
+let cSumos = [YELLOW, RED, PEACH, LIGHT_GREEN, LIGHT_GREEN, ORANGE, FUSCHIA, FUSCHIA, BLUE];
+let cLeite = [GREY, GREY, GREY, GREY, BLUE, BLUE, BLUE, BLUE, BLUE, BLUE];
+let cIogurteNatas = [GREY,GREY, FUSCHIA, FUSCHIA, FUSCHIA, LIGHT_GREEN, LIGHT_GREEN, LIGHT_GREEN, LIGHT_GREEN, LIGHT_GREEN, LIGHT_GREEN];
+  
+  
+  let colList = [cA_K, cL_Pe, cPi_W, cCondimentos, cTomateVerduras, cOutrosVegetais,cSumos, cLeite, cIogurteNatas]
+// Lists
+  
   let target_y, target_x;
-  let GREY = color(100);
   let cs;//num of targets in category pra por as coisas uniformemente a volta do circulo
     if (category_number===0||category_number===7){
       cs=10;
@@ -259,9 +272,10 @@ function createTargets(category_number, cat_x, cat_y, cat_size, width, height) {
     target_y = cat_y+cat_size*sin(-(cs-i*(2*PI/cs))+5.5*PI/8);
 
     let label_id = catList[category_number][i];
+    let col_id = colList[category_number][i];
     if (label_id!=-1){
       let target_label = legendas.getString(label_id, 0);
-      let target = new Target(target_x, target_y, width, height,target_label, label_id, GREY);
+      let target = new Target(target_x, target_y, width, height,target_label, label_id,col_id);
       targets.push(target);
     }
   }
@@ -278,13 +292,13 @@ function createCategories(circle_size, horizontal_gap, vertical_gap, target_widt
     {
       for (let c = 0; c < GRID_COLUMNS; c++) 
       {
-        let category_x = 150 + circle_size%2 + (circle_size%2 + h_margin)*c;
+        let category_x = 190 + circle_size%2 + (circle_size%2 + h_margin)*c;
         let category_y = 100 + circle_size%2 + (v_margin)*r;
 
         createTargets(r+3*c, category_x+circle_size*0.5, category_y+circle_size*0.5, circle_size, target_width, target_height); //pra enviar como referencia o centro
 
         i++;
-        let category = new Category(category_x, category_y, circle_size, images[i-1], labels[i-1]); s
+        let category = new Category(category_x, category_y, circle_size, images[i-1], labels[i-1]); 
         categories.push(category);
       }
     }
