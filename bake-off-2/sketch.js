@@ -45,7 +45,9 @@ const Leite = [37, 42, 41, 50, 39, 44, 47, 51, 40, 38];
 const IogurteNatas = [45, 48, 49, 43, 46, 57, 56, 55, 52, 54, 53];
 
 // List of Categories
-let catList = [A_K, L_Pe, Pi_W, Condimentos, TomateVerduras, OutrosVegetais,Sumos, Leite, IogurteNatas]
+let catList = [A_K, L_Pe, Pi_W, Condimentos, TomateVerduras, OutrosVegetais,Sumos, Leite, IogurteNatas];
+
+var bg  // background photo
 
 // Lists
 let targets                = [];     // Target list
@@ -66,6 +68,8 @@ function preload()
     let number = i + 1;
     images[i] = loadImage('images/category' + number + '.jpg');
   }
+
+  bg = loadImage('images/category.png');
 }
 
 // Runs once at the start
@@ -83,8 +87,8 @@ function draw()
 {
   if (draw_targets && attempt < 2)
   {     
-    // The user is interacting with the 6x3 target grid
-    background(color(255,255,255));        // sets background to white
+    
+    background(bg);        // sets background
     
     // Print trial count at the top left-corner of the canvas
     textFont('Helvetica', 16);
@@ -219,7 +223,9 @@ function continueTest()
   draw_targets = true; 
 }
 
-function createTargets(category_number, cat_x, cat_y, cat_size, width, height) {
+function createTargets(category_number, cat_x, cat_y, cat_size, width, height)
+{
+
   // Colours
   WHITE = color(0,0,0);
   BLACK = color(255,255,255);
@@ -237,18 +243,18 @@ function createTargets(category_number, cat_x, cat_y, cat_size, width, height) {
   FUSCHIA = color(227,182,285);
   
   let cA_K = [DARK_GREEN,DARK_GREEN, YELLOW, YELLOW, YELLOW, BLUE, BLUE, BLUE, LIGHT_GREEN, LIGHT_GREEN];
-let cL_Pe = [YELLOW, DARK_GREEN, LIGHT_GREEN, LIGHT_GREEN, PEACH, ORANGE, ORANGE, PURPLE, PEACH];
-let cPi_W = [YELLOW, YELLOW, PURPLE, FUSCHIA, RED, RED, RED, ORANGE, BLUE];
-let cCondimentos = [GREY, GREY, -1,-1,-1, GREY, YELLOW, YELLOW, YELLOW];
-let cTomateVerduras = [DARK_GREEN, RED, RED, RED, DARK_GREEN, DARK_GREEN, DARK_GREEN, DARK_GREEN];
-let cOutrosVegetais = [PURPLE, ORANGE, GREY, RED, YELLOW, BROWN, BROWN, BROWN];
-let cSumos = [YELLOW, RED, PEACH, LIGHT_GREEN, LIGHT_GREEN, ORANGE, FUSCHIA, FUSCHIA, BLUE];
-let cLeite = [GREY, GREY, GREY, GREY, BLUE, BLUE, BLUE, BLUE, BLUE, BLUE];
-let cIogurteNatas = [GREY,GREY, FUSCHIA, FUSCHIA, FUSCHIA, LIGHT_GREEN, LIGHT_GREEN, LIGHT_GREEN, LIGHT_GREEN, LIGHT_GREEN, LIGHT_GREEN];
+  let cL_Pe = [YELLOW, DARK_GREEN, LIGHT_GREEN, LIGHT_GREEN, PEACH, ORANGE, ORANGE, PURPLE, PEACH];
+  let cPi_W = [YELLOW, YELLOW, PURPLE, FUSCHIA, RED, RED, RED, ORANGE, BLUE];
+  let cCondimentos = [GREY, GREY, -1,-1,-1, GREY, YELLOW, YELLOW, YELLOW];
+  let cTomateVerduras = [DARK_GREEN, RED, RED, RED, DARK_GREEN, DARK_GREEN, DARK_GREEN, DARK_GREEN];
+  let cOutrosVegetais = [PURPLE, ORANGE, GREY, RED, YELLOW, BROWN, BROWN, BROWN];
+  let cSumos = [YELLOW, RED, PEACH, LIGHT_GREEN, LIGHT_GREEN, ORANGE, FUSCHIA, FUSCHIA, BLUE];
+  let cLeite = [GREY, GREY, GREY, GREY, BLUE, BLUE, BLUE, BLUE, BLUE, BLUE];
+  let cIogurteNatas = [GREY,GREY, FUSCHIA, FUSCHIA, FUSCHIA, LIGHT_GREEN, LIGHT_GREEN, LIGHT_GREEN, 
+                    LIGHT_GREEN, LIGHT_GREEN, LIGHT_GREEN];
   
   
   let colList = [cA_K, cL_Pe, cPi_W, cCondimentos, cTomateVerduras, cOutrosVegetais,cSumos, cLeite, cIogurteNatas]
-// Lists
   
   let target_y, target_x;
   let cs;//num of targets in category pra por as coisas uniformemente a volta do circulo
@@ -273,6 +279,7 @@ let cIogurteNatas = [GREY,GREY, FUSCHIA, FUSCHIA, FUSCHIA, LIGHT_GREEN, LIGHT_GR
 
     let label_id = catList[category_number][i];
     let col_id = colList[category_number][i];
+    
     if (label_id!=-1){
       let target_label = legendas.getString(label_id, 0);
       let target = new Target(target_x, target_y, width, height,target_label, label_id,col_id);
