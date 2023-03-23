@@ -29,8 +29,8 @@ class Target
     rect(this.x-this.width/2, this.y-this.height/2, this.width, this.height, 20);
     
     // Draw label
-    textFont("Arial", 12);
-    fill(color(255,255,255));
+    textFont("Helvetica", 13);
+    fill(color(0)); //a preto ve-se melhor
     textAlign(CENTER, CENTER);
     text(this.label, this.x, this.y);
   }
