@@ -31,6 +31,7 @@ let attempt               = 0;      // users complete each test twice to account
 
 // Common variables
 const NUMBER_CATEGORIES = 9;
+const NUMBER_TARGETS = 80;
 
 // Colours
 const WHITE = color(0,0,0);
@@ -108,8 +109,9 @@ function draw()
     textAlign(LEFT);
     text("Trial " + (current_trial + 1) + " of " + trials.length, 50, 20);
 
-    // Draw all targets
+    // Draw all targets and categories
     for (var i = 0; i<NUMBER_CATEGORIES; i++) categories[i].draw();
+    for (var i = 0; i<NUMBER_TARGETS; i++) targets[i].draw();
 
     // Draw the target label to be selected in the current trial
     textFont('Roboto', 20);
