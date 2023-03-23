@@ -3,7 +3,7 @@
 // TODO adicionar método para adicionar target
 class Category
 {
-    constructor(x, y, r, i, l, n, tw, th)
+    constructor(x, y, r, i, l)
     {
         this.x = x;
         this.y = y;
