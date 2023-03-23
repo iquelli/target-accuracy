@@ -30,7 +30,38 @@ let current_trial         = 0;      // the current trial number (indexes into tr
 let attempt               = 0;      // users complete each test twice to account for practice (attemps 0 and 1)
 
 // Common variables
-const NUMBER_CATEGORIES = 9; 
+const NUMBER_CATEGORIES = 9;
+
+// Colours
+const WHITE = color(0,0,0);
+const BLACK = color(255,255,255);
+const GREY = color(215,215,215);
+const BLUE = color(164, 243, 248);
+const DARK_GREEN = color(185,231,169);
+const LIGHT_GREEN = color(200,255,157);
+const YELLOW = color(246,253,164);
+const ORANGE = color(255,217,172);
+const PEACH = color(255,190,153);
+const RED = color(255,165,169);
+const PINK = color(255,165,214);
+const PURPLE = color(200,181,255);
+const BROWN = color(222,206,194);
+const FUSCHIA = color(227,182,285);
+
+// Categories
+const A_K = [20, 5, 6, 11, 21, 12, 0, 1, 22, 7];
+const L_Pe = [8, 9, 10, 13, 15, 16, 17, 18, 19];
+const Pi_W = [23, 2, 24, 25, 26, 3, 4, 27, 14];
+const Condimentos = [68, 71, 69, 63, 64, 70];
+const TomateVerduras = [58, 76, 77, 78, 79, 65, 62, 60];
+const OutrosVegetais = [59, 61, 66, 75, 67, 73, 74, 72];
+const Sumos = [28, 34, 33, 36, 31, 29, 32, 30, 35];
+const Leite = [37, 42, 41, 50, 39, 44, 47, 51, 40, 38];
+const IogurteNatas = [45, 48, 49, 43, 46, 57, 56, 55, 52, 54, 53];
+
+// List of Categories
+const catList = [A_K, L_Pe, Pi_W, Condimentos, TomateVerduras, OutrosVegetais,
+                Sumos, Leite, IogurteNatas]
 
 // Lists
 let targets                = [];     // Target list
@@ -38,6 +69,7 @@ let categories             = [];     // Category List
 let images                 = [];     // Images list
 let labels = ["Ola", "Frutas P-", "Maçã/Pera", "Outras Frutas", "Sumos", "Condimentos",
               "Leite", "Outros Vegetais", "Tomates e Vegetais Verdes", "Iogurte/Natas"]
+
 
 // Ensures important data is loaded before the program starts
 function preload()
@@ -202,7 +234,22 @@ function continueTest()
   draw_targets = true; 
 }
 
-function createCategories(circle_size, horizontal_gap, vertical_gap)
+function createTargets(category_number, cat_x, cat_y, width, height) {
+  
+  // TODO completar para fazer posições as targets à volta de cat_x e cat_y
+  for(var i = 0; i < 10; i++) {
+
+    // ALGORITMO PARA CALCULAR DIFERENTES POSIÇÕES AQUI
+    target_x = cat_x;
+    target_y = cat_y;
+
+    let label_id = catList[category_number][i]
+    let target = new Target(target_x, target_y, width, height,legendas.getString(label_id, 0), label_id, colors[label_id]);
+    targets.push(target);
+  }
+}
+
+function createCategories(circle_size, horizontal_gap, vertical_gap, target_width, target_height)
 {
     h_margin = horizontal_gap / (GRID_COLUMNS - 1);
     v_margin = vertical_gap / (GRID_ROWS - 1);
@@ -216,8 +263,10 @@ function createCategories(circle_size, horizontal_gap, vertical_gap)
         let category_x = 150 + circle_size%2 + (circle_size%2 + h_margin)*c;
         let category_y = 100 + circle_size%2 + (v_margin)*r;
 
+        createTargets(r+c, category_x, category_y, target_width, target_height)
+
         i++;
-        let category = new Category(category_x, category_y, circle_size, images[i-1], labels[i-1], i, target_width, target_height); //assim tmb ja sao enviados os targets
+        let category = new Category(category_x, category_y, circle_size, images[i-1], labels[i-1]); //assim tmb ja sao enviados os targets
         categories.push(category);
       }
     }
@@ -249,7 +298,7 @@ function windowResized()
 
     // Creates and positions the UI targets according to the white space defined above (in cm!)
     // 80 represent some margins around the display (e.g., for text)
-    createCategories(circle_size * PPCM, horizontal_gap * PPCM - 200, vertical_gap * PPCM - 200);
+    createCategories(circle_size * PPCM, horizontal_gap * PPCM - 200, vertical_gap * PPCM - 200, target_width * PPCM, target_height * PPCM);
 
     // Starts drawing targets immediately after we go fullscreen
     draw_targets = true;
