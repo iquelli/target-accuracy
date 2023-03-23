@@ -37,7 +37,7 @@ const NUMBER_TARGETS = 80;
 const A_K = [20, 5, 6, 11, 21, 12, 0, 1, 22, 7];
 const L_Pe = [8, 9, 10, 13, 15, 16, 17, 18, 19];
 const Pi_W = [23, 2, 24, 25, 26, 3, 4, 27, 14];
-const Condimentos = [68, 71, -1,-1,-1, 69, 63, 64, 70];
+const Condimentos = [68, 71, -1,-1,-1, 70, 63, 64, 69];
 const TomateVerduras = [58, 76, 77, 78, 79, 65, 62, 60];
 const OutrosVegetais = [59, 61, 66, 75, 67, 73, 74, 72];
 const Sumos = [28, 34, 33, 36, 31, 29, 32, 30, 35];
@@ -245,7 +245,7 @@ function createTargets(category_number, cat_x, cat_y, cat_size, width, height)
   let cA_K = [DARK_GREEN,DARK_GREEN, YELLOW, YELLOW, YELLOW, BLUE, BLUE, BLUE, LIGHT_GREEN, LIGHT_GREEN];
   let cL_Pe = [YELLOW, DARK_GREEN, LIGHT_GREEN, LIGHT_GREEN, PEACH, ORANGE, ORANGE, PURPLE, PEACH];
   let cPi_W = [YELLOW, YELLOW, PURPLE, FUSCHIA, RED, RED, RED, ORANGE, BLUE];
-  let cCondimentos = [GREY, GREY, -1,-1,-1, GREY, YELLOW, YELLOW, YELLOW];
+  let cCondimentos = [GREY, GREY, -1,-1,-1, YELLOW, YELLOW, YELLOW, GREY];
   let cTomateVerduras = [DARK_GREEN, RED, RED, RED, DARK_GREEN, DARK_GREEN, DARK_GREEN, DARK_GREEN];
   let cOutrosVegetais = [PURPLE, ORANGE, GREY, RED, YELLOW, BROWN, BROWN, BROWN];
   let cSumos = [YELLOW, RED, PEACH, LIGHT_GREEN, LIGHT_GREEN, ORANGE, FUSCHIA, FUSCHIA, BLUE];
@@ -302,7 +302,8 @@ function createCategories(circle_size, horizontal_gap, vertical_gap, target_widt
         let category_x = 190 + circle_size%2 + (circle_size%2 + h_margin)*c;
         let category_y = 100 + circle_size%2 + (v_margin)*r;
 
-        createTargets(r+3*c, category_x+circle_size*0.5, category_y+circle_size*0.5, circle_size, target_width, target_height); //pra enviar como referencia o centro
+        createTargets(r+3*c, category_x+circle_size*0.5, category_y+circle_size*0.5, circle_size,
+           target_width, target_height); //pra enviar como referencia o centro
 
         i++;
         let category = new Category(category_x, category_y, circle_size, images[i-1], labels[i-1]); 
