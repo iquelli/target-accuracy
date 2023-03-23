@@ -27,6 +27,7 @@ class Category
         textFont('Roboto', 32);
         fill(color(0,0,0));
         textStyle(BOLD);
-        text(this.label, this.x, this.y);
+        text(this.label, this.x+this.radius*0.5, this.y + this.radius*1.2);
+        textAlign(CENTER);
     }
 }

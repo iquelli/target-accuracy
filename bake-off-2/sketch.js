@@ -52,21 +52,8 @@ const NUMBER_CATEGORIES = 9;
 let targets                = [];     // Target list
 let categories             = [];     // Category List
 let images                 = [];     // Images list
-let labels = ["Citrinos", "Frutas P-", "Maçã/Pera", "Outras Frutas", "Sumos", "Condimentos",
+let labels = ["Ola", "Frutas P-", "Maçã/Pera", "Outras Frutas", "Sumos", "Condimentos",
               "Leite", "Outros Vegetais", "Tomates e Vegetais Verdes", "Iogurte/Natas"]
-
-//VETORES DE LABELS COM OS ID'S 
-let frutas_AK_id = [];
-let frutas_LPe_id = [];
-let frutas_PiW_id = [];
-let condimentos_id = [];
-let tomate_verduras_id = [];
-let outros_vegetais_id = [];
-let sumos_id = [];
-let leite_id = [];
-let iogurtes_natas_id = [];
-let target_labels=[frutas_AK_id, frutas_LPe_id, frutas_PiW_id, condimentos_id, tomate_verduras_id,
-outros_vegetais_id, sumos_id, leite_id, iogurtes_natas_id]; //VETOR COM OS VETORES
 
 // Ensures important data is loaded before the program starts
 function preload()
@@ -246,7 +233,7 @@ function createCategories(circle_size, horizontal_gap, vertical_gap)
         let category_y = 100 + circle_size%2 + (v_margin)*r;
 
         i++;
-        let category = new Category(category_x, category_y, circle_size, images[i-1], labels[i-1], target_labels[i-1]); //assim tmb ja sao enviados os targets
+        let category = new Category(category_x, category_y, circle_size, images[i-1], labels[i-1]);
         categories.push(category);
       }
     }
@@ -273,7 +260,7 @@ function windowResized()
     let horizontal_gap = screen_width - target_width * GRID_COLUMNS;// empty space in cm across the x-axis (based on 10 targets per row)
     let vertical_gap   = screen_height - target_height * GRID_ROWS;  // empty space in cm across the y-axis (based on 8 targets per column)
 
-    let circle_size    = 3;                                // size of category's circle
+    let circle_size    = 2.5;                                // size of category's circle
     let target_size    = 2; 
 
     // Creates and positions the UI targets according to the white space defined above (in cm!)
