@@ -32,22 +32,6 @@ let attempt               = 0;      // users complete each test twice to account
 // Common variables
 const NUMBER_CATEGORIES = 9; 
 
-// Colours
-//let WHITE = color(0,0,0);
-//let BLACK = color(255,255,255);
-//let GREY = color(215,215,215);
-//let BLUE = color(164, 243, 248);
-//let DARK_GREEN = color(185,231,169);
-//let LIGHT_GREEN = color(200,255,157);
-//let YELLOW = color(246,253,164);
-//let ORANGE = color(255,217,172);
-//let PEACH = color(255,190,153);
-//let RED = color(255,165,169);
-//let PINK = color(255,165,214);
-//let PURPLE = color(200,181,255);
-//let BROWN = color(222,206,194);
-//let FUSCHIA = color(227,182,285);
-
 // Lists
 let targets                = [];     // Target list
 let categories             = [];     // Category List
@@ -55,18 +39,6 @@ let images                 = [];     // Images list
 let labels = ["Citrinos", "Frutas P-", "Maçã/Pera", "Outras Frutas", "Sumos", "Condimentos",
               "Leite", "Outros Vegetais", "Tomates e Vegetais Verdes", "Iogurte/Natas"]
 
-//VETORES DE LABELS COM OS ID'S 
-let frutas_AK_id = [];
-let frutas_LPe_id = [];
-let frutas_PiW_id = [];
-let condimentos_id = [];
-let tomate_verduras_id = [];
-let outros_vegetais_id = [];
-let sumos_id = [];
-let leite_id = [];
-let iogurtes_natas_id = [];
-let target_labels=[frutas_AK_id, frutas_LPe_id, frutas_PiW_id, condimentos_id, tomate_verduras_id,
-outros_vegetais_id, sumos_id, leite_id, iogurtes_natas_id]; //VETOR COM OS VETORES
 
 // Ensures important data is loaded before the program starts
 function preload()
@@ -246,7 +218,7 @@ function createCategories(circle_size, horizontal_gap, vertical_gap)
         let category_y = 100 + circle_size%2 + (v_margin)*r;
 
         i++;
-        let category = new Category(category_x, category_y, circle_size, images[i-1], labels[i-1], target_labels[i-1]); //assim tmb ja sao enviados os targets
+        let category = new Category(category_x, category_y, circle_size, images[i-1], labels[i-1], i, target_width, target_height); //assim tmb ja sao enviados os targets
         categories.push(category);
       }
     }
