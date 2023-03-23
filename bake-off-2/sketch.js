@@ -36,9 +36,8 @@ const NUMBER_CATEGORIES = 9;
 let targets                = [];     // Target list
 let categories             = [];     // Category List
 let images                 = [];     // Images list
-let labels = ["Citrinos", "Frutas P-", "Maçã/Pera", "Outras Frutas", "Sumos", "Condimentos",
+let labels = ["Ola", "Frutas P-", "Maçã/Pera", "Outras Frutas", "Sumos", "Condimentos",
               "Leite", "Outros Vegetais", "Tomates e Vegetais Verdes", "Iogurte/Natas"]
-
 
 // Ensures important data is loaded before the program starts
 function preload()
@@ -245,7 +244,7 @@ function windowResized()
     let horizontal_gap = screen_width - target_width * GRID_COLUMNS;// empty space in cm across the x-axis (based on 10 targets per row)
     let vertical_gap   = screen_height - target_height * GRID_ROWS;  // empty space in cm across the y-axis (based on 8 targets per column)
 
-    let circle_size    = 3;                                // size of category's circle
+    let circle_size    = 2.5;                                // size of category's circle
     let target_size    = 2; 
 
     // Creates and positions the UI targets according to the white space defined above (in cm!)
