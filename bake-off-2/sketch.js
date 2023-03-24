@@ -94,7 +94,7 @@ function draw()
     textFont('Helvetica', 16);
     fill(color(255,255,255));
     textAlign(RIGHT, BOTTOM);
-    text("Trial " + (current_trial + 1) + " of " + trials.length, 40, 20);
+    text("Trial " + (current_trial + 1) + " of " + trials.length, 50, 20);
 
     // Draw all targets and categories
     for (var i = 0; i<NUMBER_CATEGORIES; i++) categories[i].draw();
