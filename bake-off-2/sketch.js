@@ -37,7 +37,7 @@ const NUMBER_TARGETS = 80;
 const A_K = [20, 5, 6, 11, 21, 12, 0, 1, 22, 7];
 const L_Pe = [8, 9, 10, 13, 15, 16, 17, 18, 19];
 const Pi_W = [23, 2, 24, 25, 26, 3, 4, 27, 14];
-const Condimentos = [68, 71, -1,-1,-1, 70, 63, 64, 69];
+const Condimentos = [71, -1,-1, 70, 63, 64, 69, 68];
 const TomateVerduras = [58, 76, 77, 78, 79, 65, 62, 60];
 const OutrosVegetais = [59, 61, 66, 75, 67, 73, 74, 72];
 const Sumos = [28, 34, 33, 36, 31, 29, 32, 30, 35];
@@ -45,9 +45,7 @@ const Leite = [37, 42, 41, 50, 39, 44, 47, 51, 40, 38];
 const IogurteNatas = [45, 48, 49, 43, 46, 57, 56, 55, 52, 54, 53];
 
 // List of Categories
-let catList = [A_K, L_Pe, Pi_W, Condimentos, TomateVerduras, OutrosVegetais,Sumos, Leite, IogurteNatas];
-
-var bg  // background photo
+let catList = [A_K, L_Pe, Pi_W, TomateVerduras, OutrosVegetais, Condimentos,Sumos, Leite, IogurteNatas]
 
 // Lists
 let targets                = [];     // Target list
@@ -55,6 +53,8 @@ let categories             = [];     // Category List
 let images                 = [];     // Images list
 let labels = ["Ola", "Frutas P-", "Maçã/Pera", "Outras Frutas", "Sumos", "Condimentos",
               "Leite", "Outros Vegetais", "Tomates e Vegetais Verdes", "Iogurte/Natas"]
+
+var landscape     // background photo
 
 
 // Ensures important data is loaded before the program starts
@@ -68,8 +68,8 @@ function preload()
     let number = i + 1;
     images[i] = loadImage('images/category' + number + '.jpg');
   }
-
-  bg = loadImage('images/category.png');
+  
+  landscape = loadImage('images/bg.png')
 }
 
 // Runs once at the start
@@ -87,14 +87,14 @@ function draw()
 {
   if (draw_targets && attempt < 2)
   {     
-    
-    background(bg);        // sets background
+    // The user is interacting with the 6x3 target grid
+    background(landscape);        // sets background to white
     
     // Print trial count at the top left-corner of the canvas
     textFont('Helvetica', 16);
-    fill(color(0,0,0));
-    textAlign(LEFT);
-    text("Trial " + (current_trial + 1) + " of " + trials.length, 50, 20);
+    fill(color(255,255,255));
+    textAlign(RIGHT, BOTTOM);
+    text("Trial " + (current_trial + 1) + " of " + trials.length, 40, 20);
 
     // Draw all targets and categories
     for (var i = 0; i<NUMBER_CATEGORIES; i++) categories[i].draw();
@@ -102,6 +102,7 @@ function draw()
 
     // Draw the target label to be selected in the current trial
     textFont('Arial', 20);
+    fill(color(255,255,255));
     textAlign(CENTER);
     text(legendas.getString(trials[current_trial],0), width/2, height - 20);
   }
@@ -245,7 +246,7 @@ function createTargets(category_number, cat_x, cat_y, cat_size, width, height)
   let cA_K = [DARK_GREEN,DARK_GREEN, YELLOW, YELLOW, YELLOW, BLUE, BLUE, BLUE, LIGHT_GREEN, LIGHT_GREEN];
   let cL_Pe = [YELLOW, DARK_GREEN, LIGHT_GREEN, LIGHT_GREEN, PEACH, ORANGE, ORANGE, PURPLE, PEACH];
   let cPi_W = [YELLOW, YELLOW, PURPLE, FUSCHIA, RED, RED, RED, ORANGE, BLUE];
-  let cCondimentos = [GREY, GREY, -1,-1,-1, YELLOW, YELLOW, YELLOW, GREY];
+  let cCondimentos = [GREY, -1,-1, YELLOW, YELLOW, YELLOW, GREY, GREY];
   let cTomateVerduras = [DARK_GREEN, RED, RED, RED, DARK_GREEN, DARK_GREEN, DARK_GREEN, DARK_GREEN];
   let cOutrosVegetais = [PURPLE, ORANGE, GREY, RED, YELLOW, BROWN, BROWN, BROWN];
   let cSumos = [YELLOW, RED, PEACH, LIGHT_GREEN, LIGHT_GREEN, ORANGE, FUSCHIA, FUSCHIA, BLUE];
@@ -254,17 +255,17 @@ function createTargets(category_number, cat_x, cat_y, cat_size, width, height)
                     LIGHT_GREEN, LIGHT_GREEN, LIGHT_GREEN];
   
   
-  let colList = [cA_K, cL_Pe, cPi_W, cCondimentos, cTomateVerduras, cOutrosVegetais,cSumos, cLeite, cIogurteNatas]
+  let colList = [cA_K, cL_Pe, cPi_W, cTomateVerduras, cOutrosVegetais, cCondimentos,cSumos, cLeite, cIogurteNatas]
   
   let target_y, target_x;
   let cs;//num of targets in category pra por as coisas uniformemente a volta do circulo
     if (category_number===0||category_number===7){
       cs=10;
     }
-    if (category_number===1||category_number===2 ||category_number===3 || category_number===6){
+    if (category_number===1||category_number===2 || category_number===6){
       cs=9;
     }
-    if (category_number===4||category_number===5){
+    if (category_number===4||category_number===3||category_number===5){
       cs=8;
     }
     if (category_number===8){
@@ -274,8 +275,8 @@ function createTargets(category_number, cat_x, cat_y, cat_size, width, height)
   for(var i = 0; i < cs; i++) {
 
     // ALGORITMO PARA CALCULAR DIFERENTES POSIÇÕES AQUI
-    target_x = cat_x+cat_size*(0.05*3*cs)*cos(-(cs-i*(2*PI/cs))+5.5*PI/8);
-    target_y = cat_y+cat_size*sin(-(cs-i*(2*PI/cs))+5.5*PI/8);
+    target_x = cat_x+cat_size*(0.055*3*cs)*cos(-(cs-i*(2*PI/cs))+5.5*PI/8);
+    target_y = cat_y+cat_size*(0.016*5*cs)*sin(-(cs-i*(2*PI/cs))+5.5*PI/8);
 
     let label_id = catList[category_number][i];
     let col_id = colList[category_number][i];
@@ -299,11 +300,10 @@ function createCategories(circle_size, horizontal_gap, vertical_gap, target_widt
     {
       for (let c = 0; c < GRID_COLUMNS; c++) 
       {
-        let category_x = 190 + circle_size%2 + (circle_size%2 + h_margin)*c;
-        let category_y = 100 + circle_size%2 + (v_margin)*r;
+        let category_x = 200 + circle_size%2 + (circle_size%2 + h_margin)*c;
+        let category_y = 140 + circle_size%2 + (v_margin)*r;
 
-        createTargets(r+3*c, category_x+circle_size*0.5, category_y+circle_size*0.5, circle_size,
-           target_width, target_height); //pra enviar como referencia o centro
+        createTargets(r+3*c, category_x+circle_size*0.5, category_y+circle_size*0.5, circle_size, target_width, target_height); //pra enviar como referencia o centro
 
         i++;
         let category = new Category(category_x, category_y, circle_size, images[i-1], labels[i-1]); 
@@ -332,8 +332,8 @@ function windowResized()
 
     let target_width    = 2.2;                                // sets the target size (will be converted to cm when passed to createTargets)
     let target_height    = 0.8; //ALTURA DO ALVO 
-    let horizontal_gap = screen_width - target_width * GRID_COLUMNS;// empty space in cm across the x-axis (based on 10 targets per row)
-    let vertical_gap   = screen_height - target_height * GRID_ROWS;  // empty space in cm across the y-axis (based on 8 targets per column)
+    let horizontal_gap = screen_width - 1.1*target_width * GRID_COLUMNS;// empty space in cm across the x-axis (based on 10 targets per row)
+    let vertical_gap   = screen_height - 1.5*target_height * GRID_ROWS;  // empty space in cm across the y-axis (based on 8 targets per column)
 
     // Creates and positions the UI targets according to the white space defined above (in cm!)
     // 80 represent some margins around the display (e.g., for text)
