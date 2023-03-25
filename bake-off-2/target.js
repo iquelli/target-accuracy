@@ -2,7 +2,7 @@
 
 class Target
 {
-  constructor(x, y, w, h, l, id, colour)
+  constructor(x, y, w, h, l, id, colour, c)
   {
     this.x      = x;
     this.y      = y;
@@ -11,6 +11,7 @@ class Target
     this.label  = l;
     this.id     = id;
     this.colour = colour;
+    this.category = c; // 0 se for 0, 1 se for A, 2 se for B, etc
   }
   
   // Checks if a mouse click took place
