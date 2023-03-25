@@ -30,7 +30,7 @@ let current_trial         = 0;      // the current trial number (indexes into tr
 let attempt               = 0;      // users complete each test twice to account for practice (attemps 0 and 1)
 
 // Common variables
-const NUMBER_CATEGORIES = 9;
+const NUMBER_CATEGORIES = 19;
 const NUMBER_TARGETS = 80;
 
 // Categories
@@ -50,9 +50,8 @@ let catList = [A_K, L_Pe, Pi_W, TomateVerduras, OutrosVegetais, Condimentos,Sumo
 // Lists
 let targets                = [];     // Target list
 let categories             = [];     // Category List
-let images                 = [];     // Images list
-let labels = ["Ola", "Frutas P-", "Maçã/Pera", "Outras Frutas", "Sumos", "Condimentos",
-              "Leite", "Outros Vegetais", "Tomates e Vegetais Verdes", "Iogurte/Natas"]
+let catlabels = ["0","A", "B", "C", "F" , "G", "K", "L ", "M", "N", "O", "P", 
+                "R", "S", "T", "V", "W", "Y", "Z"]
 
 var landscape     // background photo
 
@@ -61,15 +60,6 @@ var landscape     // background photo
 function preload()
 {
   legendas = loadTable('legendas.csv', 'csv', 'header');
-
-  // loads images
-  for (let i = 0; i<NUMBER_CATEGORIES; i++)
-  {
-    let number = i + 1;
-    images[i] = loadImage('images/category' + number + '.jpg');
-  }
-  
-  landscape = loadImage('images/bg.png')
 }
 
 // Runs once at the start
@@ -180,8 +170,27 @@ function mousePressed()
         // Checks if it was the correct target
         if (targets[i].id === trials[current_trial]) hits++;
         else misses++;
+
+        categories[targets[i].category].changeType(1); // unselects category
         
         current_trial++;                 // Move on to the next trial/target
+        break;
+      }
+    }
+
+    for (var i = 0; i < NUMBER_CATEGORIES; i++)
+    {
+      if(categories[i].clicked(mouseX, mouseY))
+      {
+        categories[i].changeType(2);  // selects category
+
+        // makes sure no other categories are selected
+        for(var j = 0; j < NUMBER_CATEGORIES; j++) {
+          if(j != i) {
+            categories[j].changeType(1);
+          }
+        }
+
         break;
       }
     }
@@ -303,8 +312,6 @@ function createCategories(circle_size, horizontal_gap, vertical_gap, target_widt
         let category_x = 200 + circle_size%2 + (circle_size%2 + h_margin)*c;
         let category_y = 140 + circle_size%2 + (v_margin)*r;
 
-        createTargets(r+3*c, category_x+circle_size*0.5, category_y+circle_size*0.5, circle_size, target_width, target_height); //pra enviar como referencia o centro
-
         i++;
         let category = new Category(category_x, category_y, circle_size, images[i-1], labels[i-1]); 
         categories.push(category);
@@ -328,16 +335,17 @@ function windowResized()
     // Below we find out out white space we can have between 2 cm targets
     let screen_width   = display.width * 2.54;             // screen width
     let screen_height  = display.height * 2.54;            // screen height
+
     let circle_size    = 2.5;                                // size of category's circle
 
     let target_width    = 2.2;                                // sets the target size (will be converted to cm when passed to createTargets)
     let target_height    = 0.8; //ALTURA DO ALVO 
-    let horizontal_gap = screen_width - 1.1*target_width * GRID_COLUMNS;// empty space in cm across the x-axis (based on 10 targets per row)
-    let vertical_gap   = screen_height - 1.5*target_height * GRID_ROWS;  // empty space in cm across the y-axis (based on 8 targets per column)
+    //let horizontal_gap = screen_width - 1.1*target_width * GRID_COLUMNS;// empty space in cm across the x-axis (based on 10 targets per row)
+    //let vertical_gap   = screen_height - 1.5*target_height * GRID_ROWS;  // empty space in cm across the y-axis (based on 8 targets per column)
 
     // Creates and positions the UI targets according to the white space defined above (in cm!)
     // 80 represent some margins around the display (e.g., for text)
-    createCategories(circle_size * PPCM, horizontal_gap * PPCM - 200, vertical_gap * PPCM - 200, target_width * PPCM, target_height * PPCM);
+    createCategories(circle_size * PPCM, screen_width * PPCM, screen_height * PPCM );
 
     // Starts drawing targets immediately after we go fullscreen
     draw_targets = true;
