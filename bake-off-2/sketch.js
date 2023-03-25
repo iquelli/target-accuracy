@@ -173,22 +173,24 @@ function mousePressed()
 {
   // Only look for mouse releases during the actual test
   // (i.e., during target selections)
-  if (draw_targets)
+  if (draw_targets)                           ///TIVE QUE ALTERAR AQUII
   {
-    for (var i = 0; i < legendas.getRowCount(); i++)
+    for (var i = 0; i < targets.length; i++)
     {
+      for (var j=0; j< targets[i].length; j++){
       // Check if the user clicked over one of the targets
-      if (targets[i].clicked(mouseX, mouseY)) 
+      if (targets[i][j].clicked(mouseX, mouseY)) 
       {
         // Checks if it was the correct target
-        if (targets[i].id === trials[current_trial]) hits++;
+        if (targets[i][j].id === trials[current_trial]) hits++;
         else misses++;
 
-        categories[targets[i].category].changeType(UNSELECTED); // unselects category
+        categories[targets[i][j].category].changeType(UNSELECTED); // unselects category
         
         current_trial++;                 // Move on to the next trial/target
         break;
       }
+    }
     }
 
     for (var i = 0; i < NUMBER_CATEGORIES; i++)
@@ -248,7 +250,7 @@ function continueTest()
 
 function createTargets(category_number, displaycenter_x, displaycenter_y, width, height)
 {
-  targetsgroup=[] //grupo de targets
+  targetsgroup=[] //grupo de targets VE SE ISTO TMB SERVE
   // Colours
   WHITE = color(0,0,0);
   BLACK = color(255,255,255);
@@ -377,7 +379,7 @@ function createCategories(circle_size, screen_width, screen_height, big_circle_s
 
       
       // TODO adicionar lista de targets aqui com as posições
-      let category = new Category(cat_x, cat_y, circle_size, labels[i], 1);
+      let category = new Category(cat_x, cat_y, circle_size, labels[i], 1, targets[i]);
       categories.push(category);
     }
 }

@@ -2,14 +2,14 @@
 
 class Category
 {
-    constructor(x, y, r, i, l, t)
+    constructor(x, y, r, l, t, tgts) //PASSEI COMO PARAMETRO
     {
         this.x = x;
         this.y = y;
         this.radius = r;
         this.label = l;
         this.type = t;  // to know whether to draw it as selected or as unselected circle
-        // this.targets = tgts;  // TODO ACRESCENTAR AQUI VASCO
+        this.targets = tgts;  // TODO ACRESCENTAR AQUI VASCO
     }
 
     // Checks if a mouse click took place
@@ -43,7 +43,10 @@ class Category
                 fill(color(255,255,255));
                 textAlign(CENTER);
                 text(this.label, this.x, this.y);
-                
+
+                for (let i=0; i<this.tgts.length; i++){
+                    this.tgts[i].draw();
+                }
                 //TODO acrescentar draw targets aqui (a lista q está como parametro)
         }
     }
