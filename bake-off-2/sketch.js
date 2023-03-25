@@ -236,7 +236,7 @@ function continueTest()
   draw_targets = true; 
 }
 
-function createTargets(category_number, cat_x, cat_y, cat_size, width, height)
+function createTargets(category_number, displaycenter_x, displaycenter_y, width, height)
 {
 
   // Colours
@@ -254,41 +254,94 @@ function createTargets(category_number, cat_x, cat_y, cat_size, width, height)
   PURPLE = color(200,181,255);
   BROWN = color(222,206,194);
   FUSCHIA = color(227,182,285);
-  
-  let cA_K = [DARK_GREEN,DARK_GREEN, YELLOW, YELLOW, YELLOW, BLUE, BLUE, BLUE, LIGHT_GREEN, LIGHT_GREEN];
-  let cL_Pe = [YELLOW, DARK_GREEN, LIGHT_GREEN, LIGHT_GREEN, PEACH, ORANGE, ORANGE, PURPLE, PEACH];
-  let cPi_W = [YELLOW, YELLOW, PURPLE, FUSCHIA, RED, RED, RED, ORANGE, BLUE];
-  let cCondimentos = [GREY, -1,-1, YELLOW, YELLOW, YELLOW, GREY, GREY];
-  let cTomateVerduras = [DARK_GREEN, RED, RED, RED, DARK_GREEN, DARK_GREEN, DARK_GREEN, DARK_GREEN];
-  let cOutrosVegetais = [PURPLE, ORANGE, GREY, RED, YELLOW, BROWN, BROWN, BROWN];
-  let cSumos = [YELLOW, RED, PEACH, LIGHT_GREEN, LIGHT_GREEN, ORANGE, FUSCHIA, FUSCHIA, BLUE];
-  let cLeite = [GREY, GREY, GREY, GREY, BLUE, BLUE, BLUE, BLUE, BLUE, BLUE];
-  let cIogurteNatas = [GREY,GREY, FUSCHIA, FUSCHIA, FUSCHIA, LIGHT_GREEN, LIGHT_GREEN, LIGHT_GREEN, 
-                    LIGHT_GREEN, LIGHT_GREEN, LIGHT_GREEN];
-  
-  
-  let colList = [cA_K, cL_Pe, cPi_W, cTomateVerduras, cOutrosVegetais, cCondimentos,cSumos, cLeite, cIogurteNatas]
+
+  const cZero= [GREY, GREY] //Cores atribuidas
+  const cA= [GREY,GREY, GREY, GREY, GREY];
+  const cB= [GREY, GREY, GREY, GREY, GREY, GREY, GREY, GREY, GREY];
+  const cC= [GREY, GREY, GREY, GREY, GREY, GREY, GREY];
+  const cF= [GREY, GREY];
+  const cG= [GREY, GREY, GREY, GREY, GREY];
+  const cK= [GREY, GREY];
+  const cL= [GREY, GREY, GREY];
+  const cM= [GREY, GREY, GREY, GREY, GREY, GREY, GREY];
+  const cN= [GREY];
+  const cO= [GREY, GREY, GREY, GREY];
+  const cP= [GREY,GREY,GREY,GREY,GREY,GREY,GREY,GREY,GREY,GREY,GREY];
+  const cR= [GREY, GREY, GREY, GREY, GREY, GREY];
+  const cS= [GREY, GREY, GREY, GREY, GREY, GREY, GREY, GREY];
+  const cT= [GREY];
+  const cV= [GREY, GREY];
+  const cW= [GREY, GREY];
+  const cY= [GREY, GREY];
+  const cZ= [GREY];
+    
+  let colList = [cZero, cA, cB, cC, cF, cG, cK, cL, cM, cN, cO, cP, cR, cS, cT, cV, cW, cY, cZ];
+  let num_targets_list=[2,5,9,7,2,5,2,3,7,1,4,11,6,8,1,2,2,2,1]; //listas com os numeros de alvos por categoria
+  let center_size = 2;
   
   let target_y, target_x;
-  let cs;//num of targets in category pra por as coisas uniformemente a volta do circulo
-    if (category_number===0||category_number===7){
-      cs=10;
-    }
-    if (category_number===1||category_number===2 || category_number===6){
-      cs=9;
-    }
-    if (category_number===4||category_number===3||category_number===5){
-      cs=8;
-    }
-    if (category_number===8){
-      cs=11;
-    }
-  
-  for(var i = 0; i < cs; i++) {
 
-    // ALGORITMO PARA CALCULAR DIFERENTES POSIÇÕES AQUI
-    target_x = cat_x+cat_size*(0.055*3*cs)*cos(-(cs-i*(2*PI/cs))+5.5*PI/8);
-    target_y = cat_y+cat_size*(0.016*5*cs)*sin(-(cs-i*(2*PI/cs))+5.5*PI/8);
+  let horizontal_gap = width/2;
+  let vertical_gap = height/2;
+  let threecolumns=(3*width+horizontal_gap*2); //disposiçao com 3 colunas
+  let fourcolumns=(4*width+horizontal_gap*3);
+  let tworows=(2*height+vertical_gap) //disposiçao com 2 linhas
+  let threerows=(3*height+vertical_gap*2);
+
+  for(var i=0; i < num_targets_list.length; i++) {
+    for(var j=1; j<=num_targets_list[i]; j++){
+      if (num_targets_list[i]===1){ //no centro
+        target_y = displaycenter_y;
+        target_x = displaycenter_x;
+      }
+      if (num_targets_list[i]===2 || num_targets_list[i]===3 || num_targets_list[i]===4){ //lado a lado ; em triangulo; em quadrado
+        target_x = displaycenter_x+center_size*cos(-(j*(2*PI/num_targets_list[i])));
+        target_y = displaycenter_y+center_size*sin(-(j*(2*PI/num_targets_list[i])));
+      }
+      if (num_targets_list[i]===5 || num_targets_list[i]===7){ // quadrado com 1 no centro; hexagono com 1 no centro
+        if (j===num_targets_list[i]/2){
+          target_y = displaycenter_y;
+          target_x = displaycenter_x;
+        }
+        else{
+          target_x = displaycenter_x+1.25*center_size*cos(-(j-(j%(num_targets_list[i]/2))*(2*PI/num_targets_list[i]-1)));
+          target_y = displaycenter_y+1.25*center_size*sin(-(j-(j%(num_targets_list[i]/2))*(2*PI/num_targets_list[i]-1)));
+        }
+      }
+
+      if (num_targets_list[i]===6 || num_targets_list[i]===9){ //2*3; 3*3
+      
+        target_x = displaycenter_x-((width*3+horizontal_gap*2)/2)+
+        (width + h_margin)*((j-1)%3);
+        target_y = displaycenter_y-((height*(num_targets_list[i]%3)+horizontal_gap*((num_targets_list[i]%3)-1))/2)
+        +(height+ v_margin)*((j-1)/3);
+      }
+      if (num_targets_list[i]===8){ //2*4
+        if (j<5){
+          target_y = displaycenter_y-tworows/2;
+          target_x = displaycenter_x-fourcolumns/2+(j-1*(width+horizontal_gap));
+        }
+        if (j>=5 && j<=8){
+          target_y = displaycenter_y-threerows/2+(height+vertical_gap);
+          target_x = displaycenter_x-threecolumns/2+((j-5)*(width+horizontal_gap));
+        }
+
+      }
+      if (num_targets_list[i]===11){ // 1*4+1*3+1*4
+        if (j<5){
+          target_y = displaycenter_y-threerows/2;
+          target_x = displaycenter_x-fourcolumns/2+(j-1*(width+horizontal_gap));
+        }
+        if (j>=5 && j<8){
+          target_y = displaycenter_y-threerows/2+(height+vertical_gap);
+          target_x = displaycenter_x-threecolumns/2+((j-5)*(width+horizontal_gap));
+        }
+        if (j>7 && j<=11){
+          target_y = displaycenter_y-threerows/2+(2*(height+vertical_gap));
+          target_x = displaycenter_x-fourcolumns/2+((j-8)*(width+horizontal_gap));
+        }
+      }
+    }
 
     let label_id = catList[category_number][i];
     let col_id = colList[category_number][i];
