@@ -9,6 +9,7 @@ class Category
         this.radius = r;
         this.label = l;
         this.type = t;  // to know whether to draw it as selected or as unselected circle
+        // this.targets = tgts;  // TODO ACRESCENTAR AQUI VASCO
     }
 
     // Checks if a mouse click took place
@@ -42,6 +43,8 @@ class Category
                 fill(color(255,255,255));
                 textAlign(CENTER);
                 text(this.label, this.x, this.y);
+                
+                //TODO acrescentar draw targets aqui (a lista q está como parametro)
         }
     }
 
