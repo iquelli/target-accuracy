@@ -33,7 +33,7 @@ let attempt               = 0;      // users complete each test twice to account
 const NUMBER_CATEGORIES = 19;
 const NUMBER_TARGETS = 80;
 
-// Categories
+// Categories TODO ALTERAR
 const A_K = [20, 5, 6, 11, 21, 12, 0, 1, 22, 7];
 const L_Pe = [8, 9, 10, 13, 15, 16, 17, 18, 19];
 const Pi_W = [23, 2, 24, 25, 26, 3, 4, 27, 14];
@@ -44,7 +44,7 @@ const Sumos = [28, 34, 33, 36, 31, 29, 32, 30, 35];
 const Leite = [37, 42, 41, 50, 39, 44, 47, 51, 40, 38];
 const IogurteNatas = [45, 48, 49, 43, 46, 57, 56, 55, 52, 54, 53];
 
-// List of Categories
+// List of Categories TODO ALTERAR
 let catList = [A_K, L_Pe, Pi_W, TomateVerduras, OutrosVegetais, Condimentos,Sumos, Leite, IogurteNatas]
 
 // Lists
@@ -88,7 +88,6 @@ function draw()
 
     // Draw all targets and categories
     for (var i = 0; i<NUMBER_CATEGORIES; i++) categories[i].draw();
-    for (var i = 0; i<NUMBER_TARGETS; i++) targets[i].draw();
 
     // Draw the target label to be selected in the current trial
     textFont('Arial', 20);
@@ -233,6 +232,7 @@ function continueTest()
   draw_targets = true; 
 }
 
+// TODO CHANGE
 function createTargets(category_number, cat_x, cat_y, cat_size, width, height)
 {
 
@@ -298,26 +298,21 @@ function createTargets(category_number, cat_x, cat_y, cat_size, width, height)
   }
 }
 
-function createCategories(circle_size, horizontal_gap, vertical_gap, target_width, target_height)
+function createCategories(circle_size, screen_width, screen_height, big_circle_size)
 {
-    h_margin = horizontal_gap / (GRID_COLUMNS - 1);
-    v_margin = vertical_gap / (GRID_ROWS - 1);
-  
-    let i = 0;
-    // sets the categories (which is a 3x3 grid)
-    for(let r = 0; r < GRID_ROWS; r++) 
+    let big_circle_x = screen_width/2;
+    let big_circle_y = screen_height/2;
+
+    for (var i = 0; i < NUMBER_CATEGORIES; i++)
     {
-      for (let c = 0; c < GRID_COLUMNS; c++) 
-      {
-        let category_x = 200 + circle_size%2 + (circle_size%2 + h_margin)*c;
-        let category_y = 140 + circle_size%2 + (v_margin)*r;
+      cat_x = big_circle_x+big_circle_size*(0.055*3*cs)*cos(-(cs-i*(2*PI/cs))+5.5*PI/8);
+      cat_y = big_circle_y+big_circle_size*(0.016*5*cs)*sin(-(cs-i*(2*PI/cs))+5.5*PI/8);
 
-        i++;
-        let category = new Category(category_x, category_y, circle_size, images[i-1], labels[i-1]); 
-        categories.push(category);
-      }
+      
+      // TODO adicionar lista de targets aqui com as posições
+      let category = new Category(cat_x, cat_y, circle_size, labels[i], 1);
+      categories.push(category);
     }
-
 }
 
 // Is invoked when the canvas is resized (e.g., when we go fullscreen)
@@ -336,7 +331,8 @@ function windowResized()
     let screen_width   = display.width * 2.54;             // screen width
     let screen_height  = display.height * 2.54;            // screen height
 
-    let circle_size    = 2.5;                                // size of category's circle
+    let cat_size    = 2.5;                                // size of category's circle
+    let big_circle_size = 15;                             // size of circle that the categories surround
 
     let target_width    = 2.2;                                // sets the target size (will be converted to cm when passed to createTargets)
     let target_height    = 0.8; //ALTURA DO ALVO 
@@ -344,8 +340,10 @@ function windowResized()
     //let vertical_gap   = screen_height - 1.5*target_height * GRID_ROWS;  // empty space in cm across the y-axis (based on 8 targets per column)
 
     // Creates and positions the UI targets according to the white space defined above (in cm!)
-    // 80 represent some margins around the display (e.g., for text)
-    createCategories(circle_size * PPCM, screen_width * PPCM, screen_height * PPCM );
+    
+    // TODO no createTargets criar as diferentes listas de targets e juntar todas numa
+
+    createCategories(cat_size * PPCM, screen_width, screen_height, big_circle_size * PPCM);
 
     // Starts drawing targets immediately after we go fullscreen
     draw_targets = true;
