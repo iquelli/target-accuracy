@@ -34,18 +34,30 @@ const NUMBER_CATEGORIES = 9;
 const NUMBER_TARGETS = 80;
 
 // Categories
-const A_K = [20, 5, 6, 11, 21, 12, 0, 1, 22, 7];
-const L_Pe = [8, 9, 10, 13, 15, 16, 17, 18, 19];
-const Pi_W = [23, 2, 24, 25, 26, 3, 4, 27, 14];
-const Condimentos = [71, -1,-1, 70, 63, 64, 69, 68];
-const TomateVerduras = [58, 76, 77, 78, 79, 65, 62, 60];
-const OutrosVegetais = [59, 61, 66, 75, 67, 73, 74, 72];
-const Sumos = [28, 34, 33, 36, 31, 29, 32, 30, 35];
-const Leite = [37, 42, 41, 50, 39, 44, 47, 51, 40, 38];
-const IogurteNatas = [45, 48, 49, 43, 46, 57, 56, 55, 52, 54, 53];
+const Zero= [38, 53]
+const A= [20, 28, 58, 59, 5];
+const B= [6, 76, 68, 45, 37, 42, 41, 50, 48];
+const C= [60, 11, 61, 34, 52, 21, 62];
+const F= [39, 33];
+const G= [12, 63, 64, 0, 1];
+const K= [22, 7];
+const L= [65, 8, 9];
+const M= [36, 10, 31, 55, 13, 71, 66];
+const N= [15];
+const O= [44, 43, 16, 29];
+const P= [17, 18, 19, 32, 30, 56, 23, 2, 70, 24, 25];
+const R= [75, 3, 26, 73, 69, 4];
+const S= [27, 35, 46, 47, 51, 49, 40, 74];
+const T= [77];
+const V= [57, 78];
+const W= [14, 72];
+const Y= [67, 54];
+const Z= [79];
+
+
 
 // List of Categories
-let catList = [A_K, L_Pe, Pi_W, TomateVerduras, OutrosVegetais, Condimentos,Sumos, Leite, IogurteNatas]
+let catList = [Zero, A,B,C,F, G, K, L, M, N, O, P, R, S, T, V, W, Y, Z]
 
 // Lists
 let targets                = [];     // Target list
