@@ -32,6 +32,8 @@ let attempt               = 0;      // users complete each test twice to account
 // Common variables
 const NUMBER_CATEGORIES = 19;
 const NUMBER_TARGETS = 80;
+const SELECTED = 2;
+const UNSELECTED = 1;
 
 // Categories TODO ALTERAR
 const A_K = [20, 5, 6, 11, 21, 12, 0, 1, 22, 7];
@@ -170,7 +172,7 @@ function mousePressed()
         if (targets[i].id === trials[current_trial]) hits++;
         else misses++;
 
-        categories[targets[i].category].changeType(1); // unselects category
+        categories[targets[i].category].changeType(UNSELECTED); // unselects category
         
         current_trial++;                 // Move on to the next trial/target
         break;
@@ -181,12 +183,12 @@ function mousePressed()
     {
       if(categories[i].clicked(mouseX, mouseY))
       {
-        categories[i].changeType(2);  // selects category
+        categories[i].changeType(SELECTED);  // selects category
 
         // makes sure no other categories are selected
         for(var j = 0; j < NUMBER_CATEGORIES; j++) {
           if(j != i) {
-            categories[j].changeType(1);
+            categories[j].changeType(UNSELECTED);
           }
         }
 
