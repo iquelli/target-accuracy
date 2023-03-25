@@ -248,7 +248,7 @@ function continueTest()
 
 function createTargets(category_number, displaycenter_x, displaycenter_y, width, height)
 {
-
+  targetsgroup=[] //grupo de targets
   // Colours
   WHITE = color(0,0,0);
   BLACK = color(255,255,255);
@@ -351,16 +351,16 @@ function createTargets(category_number, displaycenter_x, displaycenter_y, width,
           target_x = displaycenter_x-fourcolumns/2+((j-8)*(width+horizontal_gap));
         }
       }
-    }
+    
 
     let label_id = catList[category_number][i];
     let col_id = colList[category_number][i];
-    
-    if (label_id!=-1){
-      let target_label = legendas.getString(label_id, 0);
-      let target = new Target(target_x, target_y, width, height,target_label, label_id,col_id);
-      targets.push(target);
-    }
+
+    let target_label = legendas.getString(label_id, 0);
+    let target = new Target(target_x, target_y, width, height,target_label, label_id,col_id);
+    targetsgroup.push(target);   
+  }
+  targets.push(targetsgroup);
   }
 }
 
