@@ -366,7 +366,7 @@ function createTargets(category_number, displaycenter_x, displaycenter_y, width,
   }
 }
 
-function createCategories(circle_size, screen_width, screen_height, big_circle_size)
+function createCategories(circle_size, screen_width, screen_height, big_circle_size, target_width, target_height) //ACRESCENTEI PARAMETROS
 {
     let big_circle_x = screen_width/2;
     let big_circle_y = screen_height/2;
@@ -377,7 +377,7 @@ function createCategories(circle_size, screen_width, screen_height, big_circle_s
       cat_x = big_circle_x+big_circle_size*(0.055*3*cs)*cos(-(cs-i*(2*PI/cs))+5.5*PI/8);
       cat_y = big_circle_y+big_circle_size*(0.016*5*cs)*sin(-(cs-i*(2*PI/cs))+5.5*PI/8);
 
-      
+      createTargets(i, screen_width/2, screen_height/2, target_width, target_height); //CRIA OS TARGETS AQUI PARA SEREM ATINGIVEIS NO SKETCH
       // TODO adicionar lista de targets aqui com as posições
       let category = new Category(cat_x, cat_y, circle_size, labels[i], 1, targets[i]);
       categories.push(category);
@@ -401,10 +401,11 @@ function windowResized()
     let screen_height  = display.height * 2.54;            // screen height
 
     let cat_size    = 2.5;                                // size of category's circle
-    let big_circle_size = 15;                             // size of circle that the categories surround
+    let big_circle_size = 15;  
+    let target_width    = 2.2;                               
+    let target_height    = 0.8;                           // size of circle that the categories surround
 
-    let target_width    = 2.2;                                // sets the target size (will be converted to cm when passed to createTargets)
-    let target_height    = 0.8; //ALTURA DO ALVO 
+     //ALTURA DO ALVO 
     //let horizontal_gap = screen_width - 1.1*target_width * GRID_COLUMNS;// empty space in cm across the x-axis (based on 10 targets per row)
     //let vertical_gap   = screen_height - 1.5*target_height * GRID_ROWS;  // empty space in cm across the y-axis (based on 8 targets per column)
 
@@ -412,7 +413,7 @@ function windowResized()
     
     // TODO no createTargets criar as diferentes listas de targets e juntar todas numa
 
-    createCategories(cat_size * PPCM, screen_width, screen_height, big_circle_size * PPCM);
+    createCategories(cat_size * PPCM, screen_width, screen_height, big_circle_size * PPCM, target_height *PPCM, target_width*PPCM); //ACRESCENTEI ALGUNS PARAMETROS
 
     // Starts drawing targets immediately after we go fullscreen
     draw_targets = true;
