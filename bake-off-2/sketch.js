@@ -304,6 +304,7 @@ function createCategories(circle_size, screen_width, screen_height, big_circle_s
 {
     let big_circle_x = screen_width/2;
     let big_circle_y = screen_height/2;
+    let cs = NUMBER_CATEGORIES;
 
     for (var i = 0; i < NUMBER_CATEGORIES; i++)
     {
