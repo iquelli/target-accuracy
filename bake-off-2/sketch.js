@@ -56,7 +56,29 @@ const W= [14, 72];
 const Y= [67, 54];
 const Z= [79];
 
+// Colours
+let WHITE, BLACK, GREY, BLUE, DARK_GREEN, LIGHT_GREEN, YELLOW, ORANGE, PEACH,
+     RED, PINK, PURPLE, BROWN, FUSCHIA
 
+const cZero= [GREY, GREY];
+const cA= [GREY,GREY, GREY, GREY, GREY];
+const cB= [GREY, GREY, GREY, GREY, GREY, GREY, GREY, GREY, GREY];
+const cC= [GREY, GREY, GREY, GREY, GREY, GREY, GREY];
+const cF= [GREY, GREY];
+const cG= [GREY, GREY, GREY, GREY, GREY];
+const cK= [GREY, GREY];
+const cL= [GREY, GREY, GREY];
+const cM= [GREY, GREY, GREY, GREY, GREY, GREY, GREY];
+const cN= [GREY];
+const cO= [GREY, GREY, GREY, GREY];
+const cP= [GREY,GREY,GREY,GREY,GREY,GREY,GREY,GREY,GREY,GREY,GREY];
+const cR= [GREY, GREY, GREY, GREY, GREY, GREY];
+const cS= [GREY, GREY, GREY, GREY, GREY, GREY, GREY, GREY];
+const cT= [GREY];
+const cV= [GREY, GREY];
+const cW= [GREY, GREY];
+const cY= [GREY, GREY];
+const cZ= [GREY];
 
 // List of Categories TODO ALTERAR
 let catList = [Zero, A,B,C,F, G, K, L, M, N, O, P, R, S, T, V, W, Y, Z]
@@ -66,6 +88,7 @@ let targets                = [];     // Target list
 let categories             = [];     // Category List
 let catlabels = ["0","A", "B", "C", "F" , "G", "K", "L ", "M", "N", "O", "P", 
                 "R", "S", "T", "V", "W", "Y", "Z"]
+let num_targets_cat=[2,5,9,7,2,5,2,3,7,1,4,11,6,8,1,2,2,2,1]; // number of targets per category
 
 var landscape     // background photo
 
@@ -74,6 +97,22 @@ var landscape     // background photo
 function preload()
 {
   legendas = loadTable('legendas.csv', 'csv', 'header');
+
+  // defines colors
+  WHITE = color(0,0,0);
+  BLACK = color(255,255,255);
+  GREY = color(215,215,215);
+  BLUE = color(164, 243, 248);
+  DARK_GREEN = color(185,231,169);
+  LIGHT_GREEN = color(200,255,157);
+  YELLOW = color(246,253,164);
+  ORANGE = color(255,217,172);
+  PEACH = color(255,190,153);
+  RED = color(255,165,169);
+  PINK = color(255,165,214);
+  PURPLE = color(200,181,255);
+  BROWN = color(222,206,194);
+  FUSCHIA = color(227,182,285);
 }
 
 // Runs once at the start
@@ -184,8 +223,6 @@ function mousePressed()
         // Checks if it was the correct target
         if (targets[i][j].id === trials[current_trial]) hits++;
         else misses++;
-
-        categories[targets[i][j].category].changeType(UNSELECTED); // unselects category
         
         current_trial++;                 // Move on to the next trial/target
         break;
@@ -248,125 +285,103 @@ function continueTest()
   draw_targets = true; 
 }
 
-function createTargets(category_number, displaycenter_x, displaycenter_y, width, height)
+function createTargets(displaycenter_x, displaycenter_y, width, height)
 {
-  targetsgroup=[] //grupo de targets VE SE ISTO TMB SERVE
-  // Colours
-  WHITE = color(0,0,0);
-  BLACK = color(255,255,255);
-  GREY = color(215,215,215);
-  BLUE = color(164, 243, 248);
-  DARK_GREEN = color(185,231,169);
-  LIGHT_GREEN = color(200,255,157);
-  YELLOW = color(246,253,164);
-  ORANGE = color(255,217,172);
-  PEACH = color(255,190,153);
-  RED = color(255,165,169);
-  PINK = color(255,165,214);
-  PURPLE = color(200,181,255);
-  BROWN = color(222,206,194);
-  FUSCHIA = color(227,182,285);
+  let buffer =[];
+  let colList = [cZero, cA, cB, cC, cF, cG, cK, cL, cM, cN, cO, cP, cR,
+     cS, cT, cV, cW, cY, cZ];
 
-  const cZero= [GREY, GREY] //Cores atribuidas
-  const cA= [GREY,GREY, GREY, GREY, GREY];
-  const cB= [GREY, GREY, GREY, GREY, GREY, GREY, GREY, GREY, GREY];
-  const cC= [GREY, GREY, GREY, GREY, GREY, GREY, GREY];
-  const cF= [GREY, GREY];
-  const cG= [GREY, GREY, GREY, GREY, GREY];
-  const cK= [GREY, GREY];
-  const cL= [GREY, GREY, GREY];
-  const cM= [GREY, GREY, GREY, GREY, GREY, GREY, GREY];
-  const cN= [GREY];
-  const cO= [GREY, GREY, GREY, GREY];
-  const cP= [GREY,GREY,GREY,GREY,GREY,GREY,GREY,GREY,GREY,GREY,GREY];
-  const cR= [GREY, GREY, GREY, GREY, GREY, GREY];
-  const cS= [GREY, GREY, GREY, GREY, GREY, GREY, GREY, GREY];
-  const cT= [GREY];
-  const cV= [GREY, GREY];
-  const cW= [GREY, GREY];
-  const cY= [GREY, GREY];
-  const cZ= [GREY];
-    
-  let colList = [cZero, cA, cB, cC, cF, cG, cK, cL, cM, cN, cO, cP, cR, cS, cT, cV, cW, cY, cZ];
-  let num_targets_list=[2,5,9,7,2,5,2,3,7,1,4,11,6,8,1,2,2,2,1]; //listas com os numeros de alvos por categoria
   let center_size = 2;
   
   let target_y, target_x;
 
   let horizontal_gap = width/2;
   let vertical_gap = height/2;
-  let threecolumns=(3*width+horizontal_gap*2); //disposiçao com 3 colunas
+  let threecolumns=(3*width+horizontal_gap*2); // 3 collumn disposition
   let fourcolumns=(4*width+horizontal_gap*3);
-  let tworows=(2*height+vertical_gap) //disposiçao com 2 linhas
+  let tworows=(2*height+vertical_gap) // 2 lines disposition
   let threerows=(3*height+vertical_gap*2);
 
-  for(var i=0; i < num_targets_list.length; i++) {
-    for(var j=1; j<=num_targets_list[i]; j++){
-      if (num_targets_list[i]===1){ //no centro
-        target_y = displaycenter_y;
-        target_x = displaycenter_x;
-      }
-      if (num_targets_list[i]===2 || num_targets_list[i]===3 || num_targets_list[i]===4){ //lado a lado ; em triangulo; em quadrado
-        target_x = displaycenter_x+center_size*cos(-(j*(2*PI/num_targets_list[i])));
-        target_y = displaycenter_y+center_size*sin(-(j*(2*PI/num_targets_list[i])));
-      }
-      if (num_targets_list[i]===5 || num_targets_list[i]===7){ // quadrado com 1 no centro; hexagono com 1 no centro
-        if (j===num_targets_list[i]/2){
+  for(var i=0; i < NUMBER_CATEGORIES; i++) 
+  {
+    for(var j=1; j<=num_targets_list[i]; j++)
+    {
+      switch (num_targets_list) {
+
+        case 1: // in the center
           target_y = displaycenter_y;
           target_x = displaycenter_x;
-        }
-        else{
-          target_x = displaycenter_x+1.25*center_size*cos(-(j-(j%(num_targets_list[i]/2))*(2*PI/num_targets_list[i]-1)));
-          target_y = displaycenter_y+1.25*center_size*sin(-(j-(j%(num_targets_list[i]/2))*(2*PI/num_targets_list[i]-1)));
-        }
-      }
+          break;
 
-      if (num_targets_list[i]===6 || num_targets_list[i]===9){ //2*3; 3*3
-      
-        target_x = displaycenter_x-((width*3+horizontal_gap*2)/2)+
-        (width + h_margin)*((j-1)%3);
-        target_y = displaycenter_y-((height*(num_targets_list[i]%3)+horizontal_gap*((num_targets_list[i]%3)-1))/2)
-        +(height+ v_margin)*((j-1)/3);
-      }
-      if (num_targets_list[i]===8){ //2*4
-        if (j<5){
-          target_y = displaycenter_y-tworows/2;
-          target_x = displaycenter_x-fourcolumns/2+(j-1*(width+horizontal_gap));
-        }
-        if (j>=5 && j<=8){
-          target_y = displaycenter_y-threerows/2+(height+vertical_gap);
-          target_x = displaycenter_x-threecolumns/2+((j-5)*(width+horizontal_gap));
-        }
+        case 2: // side by side;
+        case 3: // triangle
+        case 4: // square
+          target_x = displaycenter_x+center_size*cos(-(j*(2*PI/num_targets_list[i])));
+          target_y = displaycenter_y+center_size*sin(-(j*(2*PI/num_targets_list[i])));
+          break;
 
-      }
-      if (num_targets_list[i]===11){ // 1*4+1*3+1*4
-        if (j<5){
-          target_y = displaycenter_y-threerows/2;
-          target_x = displaycenter_x-fourcolumns/2+(j-1*(width+horizontal_gap));
-        }
-        if (j>=5 && j<8){
-          target_y = displaycenter_y-threerows/2+(height+vertical_gap);
-          target_x = displaycenter_x-threecolumns/2+((j-5)*(width+horizontal_gap));
-        }
-        if (j>7 && j<=11){
-          target_y = displaycenter_y-threerows/2+(2*(height+vertical_gap));
-          target_x = displaycenter_x-fourcolumns/2+((j-8)*(width+horizontal_gap));
-        }
-      }
-    
+        case 5: // square with one in the center
+        case 7: // hexagono with one in with center  
+          if (j===num_targets_list[i]/2){
+            target_y = displaycenter_y;
+            target_x = displaycenter_x;
+          }
+          else{
+            target_x = displaycenter_x+1.25*center_size*cos(-(j-(j%(num_targets_list[i]/2))*(2*PI/num_targets_list[i]-1)));
+            target_y = displaycenter_y+1.25*center_size*sin(-(j-(j%(num_targets_list[i]/2))*(2*PI/num_targets_list[i]-1)));
+          }
+          break;
 
-    let label_id = catList[category_number][i];
-    let col_id = colList[category_number][i];
+        case 6:
+        case 9:  
+          target_x = displaycenter_x-((width*3+horizontal_gap*2)/2)+
+            (width + h_margin)*((j-1)%3);
+          target_y = displaycenter_y-((height*(num_targets_list[i]%3)+horizontal_gap*((num_targets_list[i]%3)-1))/2)
+            +(height+ v_margin)*((j-1)/3);
+          break;
+        
+        case 8: // 2*4
+          if (j<5){
+            target_y = displaycenter_y-tworows/2;
+            target_x = displaycenter_x-fourcolumns/2+(j-1*(width+horizontal_gap));
+          }
+          if (j>=5 && j<=8){
+            target_y = displaycenter_y-threerows/2+(height+vertical_gap);
+            target_x = displaycenter_x-threecolumns/2+((j-5)*(width+horizontal_gap));
+          }
+          break;
+        
+        case 11: // 1*4+1*3+1*4
+          if (j<5){
+            target_y = displaycenter_y-threerows/2;
+            target_x = displaycenter_x-fourcolumns/2+(j-1*(width+horizontal_gap));
+          }
+          if (j>=5 && j<8){
+            target_y = displaycenter_y-threerows/2+(height+vertical_gap);
+            target_x = displaycenter_x-threecolumns/2+((j-5)*(width+horizontal_gap));
+          }
+          if (j>7 && j<=11){
+            target_y = displaycenter_y-threerows/2+(2*(height+vertical_gap));
+            target_x = displaycenter_x-fourcolumns/2+((j-8)*(width+horizontal_gap));
+          }
+          break;
+      } 
 
-    let target_label = legendas.getString(label_id, 0);
-    let target = new Target(target_x, target_y, width, height,target_label, label_id,col_id);
-    targetsgroup.push(target);   
-  }
-  targets.push(targetsgroup);
+        // creates target
+        let label_id = catList[i][j-1];
+        let col_id = colList[i][j-1];
+
+        let target_label = legendas.getString(label_id, 0);
+        let target = new Target(target_x, target_y, width, height,target_label, label_id, col_id, i);
+        buffer.push(target);
+    }
+    targets.push(targetsgroup);
+    buffer.length = 0;      // clears the array
   }
 }
 
-function createCategories(circle_size, screen_width, screen_height, big_circle_size, target_width, target_height) //ACRESCENTEI PARAMETROS
+// creates an array with all the categories
+function createCategories(circle_size, screen_width, screen_height, big_circle_size, target_width, target_height)
 {
     let big_circle_x = screen_width/2;
     let big_circle_y = screen_height/2;
@@ -374,11 +389,11 @@ function createCategories(circle_size, screen_width, screen_height, big_circle_s
 
     for (var i = 0; i < NUMBER_CATEGORIES; i++)
     {
+      // calculates positions
       cat_x = big_circle_x+big_circle_size*(0.055*3*cs)*cos(-(cs-i*(2*PI/cs))+5.5*PI/8);
       cat_y = big_circle_y+big_circle_size*(0.016*5*cs)*sin(-(cs-i*(2*PI/cs))+5.5*PI/8);
-
-      createTargets(i, screen_width/2, screen_height/2, target_width, target_height); //CRIA OS TARGETS AQUI PARA SEREM ATINGIVEIS NO SKETCH
-      // TODO adicionar lista de targets aqui com as posições
+      
+      // adds category
       let category = new Category(cat_x, cat_y, circle_size, labels[i], 1, targets[i]);
       categories.push(category);
     }
@@ -405,15 +420,9 @@ function windowResized()
     let target_width    = 2.2;                               
     let target_height    = 0.8;                           // size of circle that the categories surround
 
-     //ALTURA DO ALVO 
-    //let horizontal_gap = screen_width - 1.1*target_width * GRID_COLUMNS;// empty space in cm across the x-axis (based on 10 targets per row)
-    //let vertical_gap   = screen_height - 1.5*target_height * GRID_ROWS;  // empty space in cm across the y-axis (based on 8 targets per column)
-
     // Creates and positions the UI targets according to the white space defined above (in cm!)
-    
-    // TODO no createTargets criar as diferentes listas de targets e juntar todas numa
-
-    createCategories(cat_size * PPCM, screen_width, screen_height, big_circle_size * PPCM, target_height *PPCM, target_width*PPCM); //ACRESCENTEI ALGUNS PARAMETROS
+    createTargets(screen_width/2, screen_height/2, target_width*PPCM, target_height*PPCM); // creates targets list
+    createCategories(cat_size * PPCM, screen_width, screen_height, big_circle_size * PPCM, target_height *PPCM, target_width*PPCM); 
 
     // Starts drawing targets immediately after we go fullscreen
     draw_targets = true;
