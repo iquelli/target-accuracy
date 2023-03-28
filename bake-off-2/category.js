@@ -37,7 +37,7 @@ class Category
             
             case 2:  // selected
                 fill(color(164, 243, 248));
-                circle(this.x, this.y, this.radius + 10);
+                circle(this.x, this.y, this.radius);
 
                 // Draw label
                 textFont('Roboto', 46);

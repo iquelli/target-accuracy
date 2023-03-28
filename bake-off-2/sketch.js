@@ -58,14 +58,14 @@ const Y= [67, 54];
 const Z= [79];
 
 // List of Categories
-let catList = [Zero, A,B,C,F, G, K, L, M, N, O, P, R, S, T, V, W, Y, Z]
+let catList = [P, R,S,T,V, W, Y, Z, Zero, A, B, C, F, G, K, L, M, N, O]
 
 // Lists
 let targets                = [];     // Target list
 let categories             = [];     // Category List
-let catlabels = ["0","A", "B", "C", "F" , "G", "K", "L ", "M", "N", "O", "P", 
-                "R", "S", "T", "V", "W", "Y", "Z"];
-let num_targets_cat=[2,5,9,7,2,5,2,3,7,1,4,11,6,8,1,2,2,2,1]; // number of targets per category
+let catlabels = ["P","R", "S", "T", "V" , "W", "Y", "Z ", "0", "A", "B", "C", 
+                "F", "G", "K", "L", "M", "N", "O"];
+let num_targets_cat=[11,6,8,1,2,2,2,1,2,5,9,7,2,5,2,3,7,1,4];  // number of targets per category
 
 
 // Ensures important data is loaded before the program starts
@@ -194,7 +194,7 @@ function mousePressed()
       if(categories[i].clicked(mouseX, mouseY))
       {
         categories[i].changeType(SELECTED);  // selects category
-        let curr_selected_cat = i;       // current selected category
+        curr_selected_cat = i;       // current selected category
 
         // makes sure no other categories are selected
         for(var j = 0; j < NUMBER_CATEGORIES; j++) {
@@ -283,7 +283,7 @@ function createTargets(displaycenter_x, displaycenter_y, width, height)
   const cY= [GREY, GREY];
   const cZ= [GREY];
     
-  let colList = [cZero, cA, cB, cC, cF, cG, cK, cL, cM, cN, cO, cP, cR, cS, cT, cV, cW, cY, cZ];
+  let colList = [cP, cR, cS, cT, cV, cW, cY, cZ, cZero, cA, cB, cC, cF, cG, cK, cL, cM, cN, cO];
   let buffer =[];
   let center_size = [width/3, width/1.5, width/1.5];
   
