@@ -21,7 +21,7 @@ class Category
 
     draw()
     {
-        switch (t)
+        switch (this.type)
         {
             case 1:  // not selected
                 // Draw category circle
@@ -44,11 +44,8 @@ class Category
                 textAlign(CENTER);
                 text(this.label, this.x, this.y);
 
-
                 // Draws the targets
-                for (let i=0; i<this.tgts.length; i++){
-                    this.tgts[i].draw();
-                }
+                this.tgts.forEach((target) => target.draw());
         }
     }
 
