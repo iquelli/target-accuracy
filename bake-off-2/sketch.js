@@ -285,16 +285,7 @@ function createTargets(displaycenter_x, displaycenter_y, width, height)
     
   let colList = [cP, cR, cS, cT, cV, cW, cY, cZ, cZero, cA, cB, cC, cF, cG, cK, cL, cM, cN, cO];
   let buffer =[];
-  let center_size = [width/3, width/1.5, width/1.5];
-  
-  let target_y, target_x;
-
-  let horizontal_gap = width/2;
-  let vertical_gap = height/2;
-  let threecolumns=(3*width+horizontal_gap*2); // 3 collumn disposition
-  let fourcolumns=(4*width+horizontal_gap*3);
-  let tworows=(2*height+vertical_gap) // 2 lines disposition
-  let threerows=(3*height+vertical_gap*2);
+  let center_size = [width/2, width/1.5, width/1.25, 0, width*1.25, 0, width*1.25, width*1.75] ;
 
   for(var i=0; i < NUMBER_CATEGORIES; i++) 
   {
@@ -310,8 +301,8 @@ function createTargets(displaycenter_x, displaycenter_y, width, height)
         case 2: // side by side;
         case 3: // triangle
         case 4: // square
-          target_x = displaycenter_x+(center_size[0])*cos(-(j*(2*PI/num))+PI/2);
-          target_y = displaycenter_y+(center_size[0])*sin(-(j*(2*PI/num))+PI/2);
+          target_x = displaycenter_x+(center_size[num-2])*cos(-(j*(2*PI/num))+PI/2);
+          target_y = displaycenter_y+0.7*(center_size[num-2])*sin(-(j*(2*PI/num))+PI/2);
           break;
 
         case 5: // square with one in the center
@@ -320,41 +311,37 @@ function createTargets(displaycenter_x, displaycenter_y, width, height)
             target_y = displaycenter_y;
             target_x = displaycenter_x;
           }
-          else {
-            target_x = displaycenter_x+center_size*cos(-(j-(j%(Math.floor(num/2)))*(2*PI/num-1)));
-            target_y = displaycenter_y+center_size*sin(-(j-(j%(Math.floor(num/2)))*(2*PI/num-1)));
+          else{
+            target_x = displaycenter_x+center_size[num-1]*cos(-(j-(Math.floor(j/(Math.floor(num/2)+1))))*(2*PI/(num-1))+PI/(num-1));
+            target_y = displaycenter_y+center_size[num-1]*0.6*sin(-(j-(Math.floor(j/(Math.floor(num/2)+1))))*(2*PI/(num-1))+PI/(num-1));
           }
           break;
 
         case 6:
         case 9:  
-          target_x = displaycenter_x-((width*3+horizontal_gap*2)/2)+(width + vertical_gap)*((j-1)/3);
-          target_y = displaycenter_y-((height*(num%3)+horizontal_gap*((num%3)-1))/2)+(height+vertical_gap)*((j-1)%3);
-          break;
+          target_x = displaycenter_x-(width+horizontal_gap)+
+            (width + horizontal_gap)*(Math.floor((j-1)%3));
+          target_y = displaycenter_y-((height+vertical_gap)*(num/(num+num%9)))
+            +(height+vertical_gap)*(Math.floor((j-1)/3));
         
         case 8: // 2*4
-          if (j<5){
-            target_y = displaycenter_y-tworows/2;
-            target_x = displaycenter_x-fourcolumns/2+((j-1)*(width+horizontal_gap));
+        if (j>6){
+          target_x = displaycenter_x+(center_size[0])*cos(-(j*(2*PI/2))+PI/2);
+          target_y = displaycenter_y+center_size[0]*0.7*sin(-(j*(2*PI/2))+PI/2);
+        }
+        else{
+          target_x = displaycenter_x+center_size[7]*0.8*cos(-(j*(2*PI/6)+PI/(6)));
+          target_y = displaycenter_y+center_size[7]*0.6*sin(-(j*(2*PI/6)+PI/(6)));
+        break;
+        }
+        case 11: 
+          if (j>8){
+            target_x = displaycenter_x+(center_size[1])*cos(-(j*(2*PI/3))+PI/2);
+          target_y = displaycenter_y+0.6*center_size[1]*sin(-(j*(2*PI/3))+PI/2);
           }
-          if (j>=5 && j<=8){
-            target_y = displaycenter_y-threerows/2+(height+vertical_gap);
-            target_x = displaycenter_x-threecolumns/2+((j-5)*(width+horizontal_gap));
-          }
-          break;
-        
-        case 11: // 1*4+1*3+1*4
-          if (j<5){
-            target_y = displaycenter_y-threerows/2;
-            target_x = displaycenter_x-fourcolumns/2+((j-1)*(width+horizontal_gap));
-          }
-          if (j>=5 && j<8){
-            target_y = displaycenter_y-threerows/2+(height+vertical_gap);
-            target_x = displaycenter_x-threecolumns/2+((j-5)*(width+horizontal_gap));
-          }
-          if (j>7 && j<=11){
-            target_y = displaycenter_y-threerows/2+(2*(height+vertical_gap));
-            target_x = displaycenter_x-fourcolumns/2+((j-8)*(width+horizontal_gap));
+          else{
+            target_x = displaycenter_x+center_size[7]*cos(-(j*(2*PI/8)+PI/(8)));
+            target_y = displaycenter_y+center_size[7]*0.6*sin(-(j*(2*PI/8)+PI/(8)));
           }
           break;
       } 
