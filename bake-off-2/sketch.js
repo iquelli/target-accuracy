@@ -288,7 +288,7 @@ function createTargets(displaycenter_x, displaycenter_y, width, height)
   let center_size = [width/2, width/1.5, width/1.25, 0, width*1.25, 0, width*1.25, width*1.75] ;
   let horizontal_gap = width/4;
   let vertical_gap = height/4;
-  
+
   for(var i=0; i < NUMBER_CATEGORIES; i++) 
   {
     let num = num_targets_cat[i];
@@ -323,8 +323,9 @@ function createTargets(displaycenter_x, displaycenter_y, width, height)
         case 9:  
           target_x = displaycenter_x-(width+horizontal_gap)+
             (width + horizontal_gap)*(Math.floor((j-1)%3));
-          target_y = displaycenter_y-((height+vertical_gap)*(num/(num+num%9)))
-            +(height+vertical_gap)*(Math.floor((j-1)/3));
+          target_y = displaycenter_y-((height+vertical_gap)*(num/(num+num%9)))+
+            (height+vertical_gap)*(Math.floor((j-1)/3));
+          break;
         
         case 8: // 2*4
         if (j>6){
@@ -334,8 +335,9 @@ function createTargets(displaycenter_x, displaycenter_y, width, height)
         else{
           target_x = displaycenter_x+center_size[7]*0.8*cos(-(j*(2*PI/6)+PI/(6)));
           target_y = displaycenter_y+center_size[7]*0.6*sin(-(j*(2*PI/6)+PI/(6)));
-        break;
         }
+        break;
+
         case 11: 
           if (j>8){
             target_x = displaycenter_x+(center_size[1])*cos(-(j*(2*PI/3))+PI/2);

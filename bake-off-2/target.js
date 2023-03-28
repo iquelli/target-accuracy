@@ -27,7 +27,7 @@ class Target
   {
     // Draw target
     fill(this.colour);             
-    rect(this.x-this.width/2, this.y-this.height/2, this.width, this.height, 20);
+    rect(this.x-this.width/2, this.y-this.height/2, this.width, this.height, 40);
     
     // Draw label
     textFont("Helvetica", 18);
