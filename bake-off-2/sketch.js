@@ -286,7 +286,9 @@ function createTargets(displaycenter_x, displaycenter_y, width, height)
   let colList = [cP, cR, cS, cT, cV, cW, cY, cZ, cZero, cA, cB, cC, cF, cG, cK, cL, cM, cN, cO];
   let buffer =[];
   let center_size = [width/2, width/1.5, width/1.25, 0, width*1.25, 0, width*1.25, width*1.75] ;
-
+  let horizontal_gap = width/4;
+  let vertical_gap = height/4;
+  
   for(var i=0; i < NUMBER_CATEGORIES; i++) 
   {
     let num = num_targets_cat[i];
