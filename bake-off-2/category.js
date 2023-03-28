@@ -31,8 +31,9 @@ class Category
                 // Draw label
                 textFont('Roboto', 32);
                 fill(color(255,255,255));
-                textAlign(CENTER);
+                textAlign(CENTER, CENTER);
                 text(this.label, this.x, this.y);
+                break;
             
             case 2:  // selected
                 fill(color(164, 243, 248));
@@ -41,11 +42,12 @@ class Category
                 // Draw label
                 textFont('Roboto', 46);
                 fill(color(255,255,255));
-                textAlign(CENTER);
+                textAlign(CENTER, CENTER);
                 text(this.label, this.x, this.y);
                 
                 // Draws the targets
                 this.targets.forEach((target) => target.draw());
+                break;
         }
     }
 

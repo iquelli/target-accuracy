@@ -34,6 +34,7 @@ const NUMBER_CATEGORIES = 19;
 const NUMBER_TARGETS = 80;
 const SELECTED = 2;
 const UNSELECTED = 1;
+let curr_selected_cat = -1;        // current selected category
 
 // Categories
 const Zero= [38, 53]
@@ -56,7 +57,7 @@ const W= [14, 72];
 const Y= [67, 54];
 const Z= [79];
 
-// List of Categories TODO ALTERAR
+// List of Categories
 let catList = [Zero, A,B,C,F, G, K, L, M, N, O, P, R, S, T, V, W, Y, Z]
 
 // Lists
@@ -170,22 +171,22 @@ function mousePressed()
 {
   // Only look for mouse releases during the actual test
   // (i.e., during target selections)
-  if (draw_targets)                           ///TIVE QUE ALTERAR AQUII
+  if (draw_targets)
   {
-    for (var i = 0; i < targets.length; i++)
+    if(curr_selected_cat != -1)  // checks if at least one category is selected
     {
-      for (var j=0; j< targets[i].length; j++){
-      // Check if the user clicked over one of the targets
-      if (targets[i][j].clicked(mouseX, mouseY)) 
-      {
+      for (var j=0; j< targets[curr_selected_cat].length; j++){
+      // Check if the user clicked over one of the targets of the selected category
+        if (targets[curr_selected_cat][j].clicked(mouseX, mouseY)) 
+        {
         // Checks if it was the correct target
-        if (targets[i][j].id === trials[current_trial]) hits++;
-        else misses++;
+          if (targets[curr_selected_cat][j].id === trials[current_trial]) hits++;
+          else misses++;
         
-        current_trial++;                 // Move on to the next trial/target
-        break;
+          current_trial++;                 // Move on to the next trial/target
+          break;
+        }
       }
-    }
     }
 
     for (var i = 0; i < NUMBER_CATEGORIES; i++)
@@ -193,6 +194,7 @@ function mousePressed()
       if(categories[i].clicked(mouseX, mouseY))
       {
         categories[i].changeType(SELECTED);  // selects category
+        let curr_selected_cat = i;       // current selected category
 
         // makes sure no other categories are selected
         for(var j = 0; j < NUMBER_CATEGORIES; j++) {
@@ -283,7 +285,7 @@ function createTargets(displaycenter_x, displaycenter_y, width, height)
     
   let colList = [cZero, cA, cB, cC, cF, cG, cK, cL, cM, cN, cO, cP, cR, cS, cT, cV, cW, cY, cZ];
   let buffer =[];
-  let center_size = 2;
+  let center_size = [width/3, width/1.5, width/1.5];
   
   let target_y, target_x;
 
@@ -299,18 +301,17 @@ function createTargets(displaycenter_x, displaycenter_y, width, height)
     let num = num_targets_cat[i];
     for(var j=1; j<=num; j++)
     {
+      // in the center
+      let target_y = displaycenter_y; 
+      let target_x = displaycenter_x;
+      
       switch (num) {
-
-        case 1: // in the center
-          target_y = displaycenter_y;
-          target_x = displaycenter_x;
-          break;
 
         case 2: // side by side;
         case 3: // triangle
         case 4: // square
-          target_x = displaycenter_x+center_size*cos(-(j*(2*PI/num)));
-          target_y = displaycenter_y+center_size*sin(-(j*(2*PI/num)));
+          target_x = displaycenter_x+(center_size[0])*cos(-(j*(2*PI/num))+PI/2);
+          target_y = displaycenter_y+(center_size[0])*sin(-(j*(2*PI/num))+PI/2);
           break;
 
         case 5: // square with one in the center
@@ -319,7 +320,7 @@ function createTargets(displaycenter_x, displaycenter_y, width, height)
             target_y = displaycenter_y;
             target_x = displaycenter_x;
           }
-          else{
+          else {
             target_x = displaycenter_x+center_size*cos(-(j-(j%(Math.floor(num/2)))*(2*PI/num-1)));
             target_y = displaycenter_y+center_size*sin(-(j-(j%(Math.floor(num/2)))*(2*PI/num-1)));
           }
@@ -334,7 +335,7 @@ function createTargets(displaycenter_x, displaycenter_y, width, height)
         case 8: // 2*4
           if (j<5){
             target_y = displaycenter_y-tworows/2;
-            target_x = displaycenter_x-fourcolumns/2+(j-1*(width+horizontal_gap));
+            target_x = displaycenter_x-fourcolumns/2+((j-1)*(width+horizontal_gap));
           }
           if (j>=5 && j<=8){
             target_y = displaycenter_y-threerows/2+(height+vertical_gap);
@@ -345,7 +346,7 @@ function createTargets(displaycenter_x, displaycenter_y, width, height)
         case 11: // 1*4+1*3+1*4
           if (j<5){
             target_y = displaycenter_y-threerows/2;
-            target_x = displaycenter_x-fourcolumns/2+(j-1*(width+horizontal_gap));
+            target_x = displaycenter_x-fourcolumns/2+((j-1)*(width+horizontal_gap));
           }
           if (j>=5 && j<8){
             target_y = displaycenter_y-threerows/2+(height+vertical_gap);
@@ -373,7 +374,7 @@ function createTargets(displaycenter_x, displaycenter_y, width, height)
 }
 
 // creates an array with all the categories
-function createCategories(circle_size, screen_width, screen_height, big_circle_size, target_width, target_height)
+function createCategories(circle_size, screen_width, screen_height, big_circle_size)
 {
     let big_circle_x = screen_width/2;
     let big_circle_y = screen_height/2;
@@ -382,8 +383,8 @@ function createCategories(circle_size, screen_width, screen_height, big_circle_s
     for (var i = 0; i < NUMBER_CATEGORIES; i++)
     {
       // calculates positions
-      cat_x = big_circle_x+big_circle_size*(0.055*3*cs)*cos(-(cs-i*(2*PI/cs))+5.5*PI/8);
-      cat_y = big_circle_y+big_circle_size*(0.016*5*cs)*sin(-(cs-i*(2*PI/cs))+5.5*PI/8);
+      cat_x = big_circle_x+big_circle_size*(1.1*cos(-(cs-i*(2*PI/cs))+5.5*PI/8));
+      cat_y = big_circle_y+big_circle_size*(0.75*sin(-(cs-i*(2*PI/cs))+5.5*PI/8));
       
       // adds category
       let category = new Category(cat_x, cat_y, circle_size, catlabels[i], 1, targets[i]);
@@ -408,13 +409,13 @@ function windowResized()
     let screen_height  = display.height * 2.54;            // screen height
 
     let cat_size    = 2.5;                                // size of category's circle
-    let big_circle_size = 15;  
-    let target_width    = 2.2;                               
-    let target_height    = 0.8;                           // size of circle that the categories surround
+    let big_circle_size = 10; 
+    let target_width    = 4;                              
+    let target_height    = 2;                          // size of circle that the categories surround
 
     // Creates and positions the UI targets according to the white space defined above (in cm!)
-    createTargets(screen_width/2, screen_height/2, target_width*PPCM, target_height*PPCM); // creates targets list
-    createCategories(cat_size * PPCM, screen_width, screen_height, big_circle_size * PPCM, target_height *PPCM, target_width*PPCM); 
+    createTargets(screen_width/2 * PPCM , screen_height/2 * PPCM , target_width*PPCM, target_height*PPCM); // creates targets list
+    createCategories(cat_size * PPCM, screen_width * PPCM, screen_height * PPCM ,big_circle_size * PPCM);  // creates categories list
 
     // Starts drawing targets immediately after we go fullscreen
     draw_targets = true;
