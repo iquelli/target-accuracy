@@ -43,9 +43,9 @@ class Category
                 fill(color(255,255,255));
                 textAlign(CENTER);
                 text(this.label, this.x, this.y);
-
+                
                 // Draws the targets
-                this.tgts.forEach((target) => target.draw());
+                this.targets.forEach((target) => target.draw());
         }
     }
 

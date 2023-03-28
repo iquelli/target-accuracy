@@ -363,10 +363,12 @@ function createTargets(displaycenter_x, displaycenter_y, width, height)
         let col_id = colList[i][j-1];
 
         let target_label = legendas.getString(label_id, 0);
+        
         let target = new Target(target_x, target_y, width, height,target_label, label_id, col_id, i);
         buffer.push(target);
     }
     targets.push(buffer);
+    buffer = [];
   }
 }
 
