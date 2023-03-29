@@ -39,7 +39,7 @@ let curr_selected_cat = -1;        // current selected category
 // Categories
 const Zero= [38, 53]
 const A= [20, 28, 58, 59, 5];
-const B= [6, 76, 68, 45, 37, 42, 41, 50, 48];
+const B= [6, 76, 68, 41, 42, 37, 45, 50, 48];
 const C= [60, 11, 34, 61, 52, 21, 62];
 const F= [39, 33];
 const G= [12, 63, 64, 0, 1];
