@@ -25,11 +25,11 @@ class Category
         {
             case 1:  // not selected
                 // Draw category circle
-                fill(color(155,155,155));
+                fill(color(125));
                 circle(this.x, this.y, this.radius);
        
                 // Draw label
-                textFont('Roboto', 32);
+                textFont('Roboto', 40);
                 fill(color(255,255,255));
                 textAlign(CENTER, CENTER);
                 text(this.label, this.x, this.y);
@@ -40,7 +40,7 @@ class Category
                 circle(this.x, this.y, this.radius);
 
                 // Draw label
-                textFont('Roboto', 46);
+                textFont('Roboto', 70);
                 fill(color(255,255,255));
                 textAlign(CENTER, CENTER);
                 text(this.label, this.x, this.y);
