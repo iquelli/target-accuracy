@@ -101,6 +101,9 @@ function draw()
     // Draw all targets and categories
     for (var i = 0; i<NUMBER_CATEGORIES; i++) categories[i].draw();
 
+    fill(color(0)); ///BLACK BACKGROUND
+    rect(width/2-75, height-50, 150, 100);
+
     // Draw the target label to be selected in the current trial
     textFont('Arial', 20);
     fill(color(255,255,255));
