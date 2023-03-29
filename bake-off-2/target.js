@@ -1,8 +1,6 @@
-// Target class (position and width)
-
 class Target
 {
-  constructor(x, y, w, h, l, id, colour, c)
+  constructor(x, y, w, h, l, id, colour, c, img)
   {
     this.x      = x;
     this.y      = y;
@@ -12,6 +10,7 @@ class Target
     this.id     = id;
     this.colour = colour;
     this.category = c; // 0 se for 0, 1 se for A, 2 se for B, etc
+    this.img = img;
   }
   
   // Checks if a mouse click took place
@@ -29,10 +28,13 @@ class Target
     fill(this.colour);             
     rect(this.x-this.width/2, this.y-this.height/2, this.width, this.height, 40);
     
+    this.img.resize(this.height*0.90, this.height*0.90)
+    image(this.img, this.x-(this.width/4) , this.y-this.height*0.95);
+    
     // Draw label
     textFont("Helvetica", 18);
     fill(color(0)); //a preto ve-se melhor
-    textAlign(CENTER, CENTER);
+    textAlign(CENTER, TOP);
     text(this.label, this.x, this.y);
   }
 }

@@ -61,6 +61,7 @@ const Z= [79];
 let catList = [P, R,S,T,V, W, Y, Z, Zero, A, B, C, F, G, K, L, M, N, O]
 
 // Lists
+let images                 = [];  //images list
 let targets                = [];     // Target list
 let categories             = [];     // Category List
 let catlabels = ["P","R", "S", "T", "V" , "W", "Y", "Z ", "0", "A", "B", "C", 
@@ -72,6 +73,13 @@ let num_targets_cat=[11,6,8,1,2,2,2,1,2,5,9,7,2,5,2,3,7,1,4];  // number of targ
 function preload()
 {
   legendas = loadTable('legendas.csv', 'csv', 'header');
+  for (let i = 0; i<NUMBER_TARGETS; i++)
+  {
+    if (i<28 || i>57)
+    images[i] = loadImage('images/'+i+ '.png');
+    
+    else images[i] = loadImage('images/empty.png');
+  }
 }
 
 // Runs once at the start
@@ -100,14 +108,14 @@ function draw()
 
     // Draw all targets and categories
     for (var i = 0; i<NUMBER_CATEGORIES; i++) categories[i].draw();
-
-    fill(color(0)); ///BLACK BACKGROUND
+    
+    fill(color(0));
     rect(width/2-75, height-50, 150, 100);
 
     // Draw the target label to be selected in the current trial
     textFont('Arial', 20);
     fill(color(255,255,255));
-    textAlign(CENTER);
+    textAlign(CENTER, BOTTOM);
     text(legendas.getString(trials[current_trial],0), width/2, height - 20);
   }
 }
@@ -289,9 +297,9 @@ function createTargets(displaycenter_x, displaycenter_y, width, height)
   let colList = [cP, cR, cS, cT, cV, cW, cY, cZ, cZero, cA, cB, cC, cF, cG, cK, cL, cM, cN, cO];
   let buffer =[];
   let center_size = [width/2, width/1.5, width/1.25, 0, width*1.25, 0, width*1.25, width*1.75] ;
-  let horizontal_gap = width/4;
-  let vertical_gap = height/4;
-
+  let horizontal_gap = width/3;
+  let vertical_gap = height/2;
+  
   for(var i=0; i < NUMBER_CATEGORIES; i++) 
   {
     let num = num_targets_cat[i];
@@ -326,21 +334,20 @@ function createTargets(displaycenter_x, displaycenter_y, width, height)
         case 9:  
           target_x = displaycenter_x-(width+horizontal_gap)+
             (width + horizontal_gap)*(Math.floor((j-1)%3));
-          target_y = displaycenter_y-((height+vertical_gap)*(num/(num+num%9)))+
-            (height+vertical_gap)*(Math.floor((j-1)/3));
+          target_y = displaycenter_y-((height+vertical_gap)*(num/(num+num%9)))+(height+vertical_gap)*(Math.floor((j-1)/3));
           break;
         
         case 8: // 2*4
-        if (j>6){
-          target_x = displaycenter_x+(center_size[0])*cos(-(j*(2*PI/2))+PI/2);
-          target_y = displaycenter_y+center_size[0]*0.7*sin(-(j*(2*PI/2))+PI/2);
-        }
-        else{
-          target_x = displaycenter_x+center_size[7]*0.8*cos(-(j*(2*PI/6)+PI/(6)));
-          target_y = displaycenter_y+center_size[7]*0.6*sin(-(j*(2*PI/6)+PI/(6)));
-        }
-        break;
-
+          if (j>6){
+            target_x = displaycenter_x+(center_size[0])*cos(-(j*(2*PI/2))+PI/2);
+            target_y = displaycenter_y+center_size[0]*0.7*sin(-(j*(2*PI/2))+PI/2);
+          }
+          else{
+            target_x = displaycenter_x+center_size[7]*0.8*cos(-(j*(2*PI/6)+PI/(6)));
+            target_y = displaycenter_y+center_size[7]*0.6*sin(-(j*(2*PI/6)+PI/(6)));
+          }
+          break;
+        
         case 11: 
           if (j>8){
             target_x = displaycenter_x+(center_size[1])*cos(-(j*(2*PI/3))+PI/2);
@@ -359,7 +366,7 @@ function createTargets(displaycenter_x, displaycenter_y, width, height)
 
         let target_label = legendas.getString(label_id, 0);
         
-        let target = new Target(target_x, target_y, width, height,target_label, label_id, col_id, i);
+        let target = new Target(target_x, target_y, width, height,target_label, label_id, col_id, i, images[label_id]);
         buffer.push(target);
     }
     targets.push(buffer);
@@ -377,8 +384,8 @@ function createCategories(circle_size, screen_width, screen_height, big_circle_s
     for (var i = 0; i < NUMBER_CATEGORIES; i++)
     {
       // calculates positions
-      cat_x = big_circle_x+big_circle_size*(1.1*cos(-(cs-i*(2*PI/cs))+5.5*PI/8));
-      cat_y = big_circle_y+big_circle_size*(0.75*sin(-(cs-i*(2*PI/cs))+5.5*PI/8));
+      cat_x = big_circle_x+big_circle_size*(1.6*cos(-(cs-i*(2*PI/cs))+5.6*PI/8));
+      cat_y = big_circle_y+big_circle_size*(1.075*sin(-(cs-i*(2*PI/cs))+5.6*PI/8));
       
       // adds category
       let category = new Category(cat_x, cat_y, circle_size, catlabels[i], 1, targets[i]);
@@ -403,7 +410,7 @@ function windowResized()
     let screen_height  = display.height * 2.54;            // screen height
 
     let cat_size    = 2.5;                                // size of category's circle
-    let big_circle_size = 10; 
+    let big_circle_size = 7; 
     let target_width    = 4;                              
     let target_height    = 2;                          // size of circle that the categories surround
 
