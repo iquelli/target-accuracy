@@ -285,7 +285,7 @@ function createTargets(displaycenter_x, displaycenter_y, width, height, big_circ
   const cA= [YELLOW ,LIGHT_GREEN, PURPLE, BROWN, MAGENTA];
   const cB= [YELLOW,  V_BLUE,  V_YELLOW, PINK, V_BLUE,  V_YELLOW, ORANGE,  V_BLUE,  WHITE];
   const cC= [LIGHT_GREEN, DARK_GREEN, YELLOW, MAGENTA, ORANGE, WHITE, FUSCHIA];
-  const cF= [BLUE, MAGENTA];
+  const cF= [V_BLUE, MAGENTA];
   const cG= [DARK_GREEN, BROWN, PEACH, FUSCHIA, LIGHT_GREEN];
   const cK= [YELLOW, LIGHT_GREEN];
   const cL= [DARK_GREEN, YELLOW, LIGHT_GREEN];
