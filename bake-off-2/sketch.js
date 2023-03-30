@@ -259,8 +259,8 @@ function continueTest()
 function createTargets(displaycenter_x, displaycenter_y, width, height, big_circle_size)
 {
   // Colours
-  WHITE = color(0,0,0);
-  BLACK = color(255,255,255);
+  WHITE = color(255);
+  BLACK = color(0);
   GREY = color(215,215,215);
   BLUE = color(164, 243, 248);
   DARK_GREEN = color(185,231,169);
@@ -274,25 +274,25 @@ function createTargets(displaycenter_x, displaycenter_y, width, height, big_circ
   BROWN = color(222,206,194);
   FUSCHIA = color(227,182,285);
 
-  const cZero= [GREY, GREY] //Cores atribuidas
-  const cA= [GREY,GREY, GREY, GREY, GREY];
-  const cB= [GREY, GREY, GREY, PINK, BLUE, LIGHT_GREEN, ORANGE, PURPLE, RED];
-  const cC= [GREY, GREY, GREY, GREY, GREY, GREY, GREY];
-  const cF= [GREY, GREY];
-  const cG= [GREY, GREY, GREY, GREY, GREY];
-  const cK= [GREY, GREY];
-  const cL= [GREY, GREY, GREY];
-  const cM= [GREY, GREY, GREY, GREY, GREY, GREY, GREY];
-  const cN= [GREY];
-  const cO= [GREY, GREY, GREY, GREY];
-  const cP= [GREY,GREY,GREY,GREY,GREY,GREY,GREY,GREY,GREY,GREY,GREY];
-  const cR= [GREY, GREY, GREY, GREY, GREY, GREY];
-  const cS= [GREY, GREY, GREY, GREY, GREY, GREY, GREY, GREY];
-  const cT= [GREY];
-  const cV= [GREY, GREY];
-  const cW= [GREY, GREY];
-  const cY= [GREY, GREY];
-  const cZ= [GREY];
+  const cZero= [WHITE, WHITE] //Cores atribuidas
+  const cA= [YELLOW ,LIGHT_GREEN, PURPLE, BROWN, PINK];
+  const cB= [YELLOW,  BLUE,  BLUE, PINK, BLUE,  BLUE, ORANGE,  BLUE,  BLUE];
+  const cC= [LIGHT_GREEN, DARK_GREEN, YELLOW, PURPLE, ORANGE, PURPLE, FUSCHIA];
+  const cF= [WHITE, PINK];
+  const cG= [DARK_GREEN, BROWN, PEACH, FUSCHIA, LIGHT_GREEN];
+  const cK= [YELLOW, LIGHT_GREEN];
+  const cL= [DARK_GREEN, YELLOW, LIGHT_GREEN];
+  const cM= [LIGHT_GREEN, LIGHT_GREEN, DARK_GREEN, LIGHT_GREEN, RED, PINK, GREY];
+  const cN= [ORANGE];
+  const cO= [WHITE, WHITE, ORANGE, ORANGE];
+  const cP= [LIGHT_GREEN,BROWN,PINK,PURPLE,PEACH,PINK,YELLOW,FUSCHIA,WHITE,RED,DARK_GREEN];
+  const cR= [RED, RED, RED, RED, YELLOW, ORANGE];
+  const cS= [WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, ORANGE, BROWN];
+  const cT= [RED];
+  const cV= [WHITE, RED];
+  const cW= [LIGHT_GREEN, BROWN];
+  const cY= [YELLOW, WHITE];
+  const cZ= [DARK_GREEN];
     
   let colList = [cZero, cA, cB, cC, cF, cG, cK, cL, cM, cN, cO,cP, cR, cS, cT, cV, cW, cY, cZ];
   let buffer =[];
