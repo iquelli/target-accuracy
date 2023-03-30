@@ -4,18 +4,18 @@ let student_ID_form, display_size_form, start_button;                  // Initia
 let student_ID, display_size;                                          // User input parameters
 
 // Prints the initial UI that prompts that ask for student ID and screen size
-function drawUserIDScreen()
+function drawUserIDScreen(inicial_screen)
 { 
-  background(color(0,0,0));                                          // sets background to black
+  background(inicial_screen);                                          // sets background to black
   
   // Text prompt
   main_text = createDiv("Insert your student number and display size");
   main_text.id('main_text');
-  main_text.position(10, 10);
+  main_text.position(10, 40);
   
   // Input forms:
   // 1. Student ID
-  let student_ID_pos_y_offset = main_text.size().height + 40;         // y offset from previous item
+  let student_ID_pos_y_offset = main_text.size().height + 40 + 40;         // y offset from previous item
   
   student_ID_form = createInput('');                                 // create input field
   student_ID_form.position(200, student_ID_pos_y_offset);
@@ -37,7 +37,7 @@ function drawUserIDScreen()
   // 3. Start button
   start_button = createButton('START');
   start_button.mouseReleased(startTest);
-  start_button.position(width/2 - start_button.size().width/2, height/2 - start_button.size().height/2);
+  start_button.position(width/2 - start_button.size().width/2, height/3 - start_button.size().height/2 + 40);
 }
 
 // Verifies if the student ID is a number, and within an acceptable range
@@ -90,7 +90,7 @@ function randomizeTrials()
   trials = [];      // Empties the array
     
   // Creates an array with random items from the "legendas" CSV
-  for (var i = 0; i < NUM_OF_TRIALS; i++) trials.push(floor(random(legendas.getRowCount())));
+  for (var i = 0; i < NUM_OF_TRIALS; i++) trials.push(round(random(legendas.getRowCount())));
 
   // print("trial order: " + trials);   // prints trial order - for debug purposes
 }

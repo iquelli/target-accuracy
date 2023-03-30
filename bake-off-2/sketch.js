@@ -35,6 +35,7 @@ const NUMBER_TARGETS = 80;
 const SELECTED = 2;
 const UNSELECTED = 1;
 let curr_selected_cat = -1;        // current selected category
+var initial_screen;
 
 // Categories
 const Zero= [38, 53]
@@ -80,16 +81,18 @@ function preload()
     
     else images[i] = loadImage('images/empty.png');
   }
+
+  initial_screen = loadImage('images/initial-screen.png');
 }
 
 // Runs once at the start
 function setup()
 {
-  createCanvas(700, 500);    // window size in px before we go into fullScreen()
-  frameRate(60);             // frame rate (DO NOT CHANGE!)
+  createCanvas(700, 500);                  // window size in px before we go into fullScreen()
+  frameRate(60);                           // frame rate (DO NOT CHANGE!)
   
-  randomizeTrials();         // randomize the trial order at the start of execution
-  drawUserIDScreen();        // draws the user start-up screen (student ID and display size)
+  randomizeTrials();                       // randomize the trial order at the start of execution
+  drawUserIDScreen(initial_screen);        // draws the user start-up screen (student ID and display size)
 }
 
 // Runs every frame and redraws the screen
