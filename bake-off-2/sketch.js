@@ -35,6 +35,7 @@ const NUMBER_TARGETS = 80;
 const SELECTED = 2;
 const UNSELECTED = 1;
 let curr_selected_cat = -1;        // current selected category
+var initial_screen;
 
 // Categories
 const Zero= [38, 53]
@@ -80,6 +81,8 @@ function preload()
     
     else images[i] = loadImage('images/empty.png');
   }
+
+  initial_screen = loadImage('images/initial-screen.png');
 }
 
 // Runs once at the start
