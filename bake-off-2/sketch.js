@@ -35,7 +35,6 @@ const NUMBER_TARGETS = 80;
 const SELECTED = 2;
 const UNSELECTED = 1;
 let curr_selected_cat = -1;        // current selected category
-var initial_screen;
 
 // Categories
 const Zero= [38, 53]
@@ -51,7 +50,7 @@ const N= [15];
 const O= [44, 43, 16, 29];
 const P= [17, 18, 30, 24, 19, 32, 23, 2, 56, 70, 25];
 const R= [75, 3, 26, 73, 69, 4];
-const S= [46, 49, 35, 47, 51, 40, 27, 74];
+const S= [46, 35, 49, 51, 47, 40, 27, 74];
 const T= [77];
 const V= [57, 78];
 const W= [14, 72];
@@ -81,15 +80,13 @@ function preload()
     
     else images[i] = loadImage('images/empty.png');
   }
-
-  initial_screen = loadImage('images/initial-screen.png');
 }
 
 // Runs once at the start
 function setup()
 {
-  createCanvas(700, 500);                  // window size in px before we go into fullScreen()
-  frameRate(60);                           // frame rate (DO NOT CHANGE!)
+  createCanvas(700, 500);    // window size in px before we go into fullScreen()
+  frameRate(60);             // frame rate (DO NOT CHANGE!)
   
   randomizeTrials();                       // randomize the trial order at the start of execution
   drawUserIDScreen(initial_screen);        // draws the user start-up screen (student ID and display size)
@@ -101,7 +98,7 @@ function draw()
   if (draw_targets && attempt < 2)
   {     
     // The user is interacting with the 6x3 target grid
-    background(color(200));        // sets background to white
+    background(color(225, 255, 255));        // sets background to white
     
     // Print trial count at the top left-corner of the canvas
     textFont('Helvetica', 16);
@@ -265,32 +262,36 @@ function createTargets(displaycenter_x, displaycenter_y, width, height, big_circ
   WHITE = color(255);
   BLACK = color(0);
   GREY = color(215,215,215);
-  BLUE = color(164, 243, 248);
-  DARK_GREEN = color(185,231,169);
-  LIGHT_GREEN = color(200,255,157);
-  YELLOW = color(246,253,164);
-  ORANGE = color(255,217,172);
+  GREY2= color(155)
+  BLUE = color(115, 213, 255);
+  V_BLUE = color(24, 223, 255);
+  MAGENTA = color(224,95,255);
+  V_YELLOW = color(255,233,36);
+  DARK_GREEN = color(205,251,189);
+  LIGHT_GREEN = color(220,255,177);
+  YELLOW = color(255,255,184);
+  ORANGE = color(255,237,192);
   PEACH = color(255,190,153);
-  RED = color(255,165,169);
-  PINK = color(255,165,214);
-  PURPLE = color(200,181,255);
-  BROWN = color(222,206,194);
-  FUSCHIA = color(227,182,285);
+  RED = color(255,185,189);
+  PINK = color(255,205,244);
+  PURPLE = color(220,201,255);
+  BROWN = color(242,226,214);
+  FUSCHIA = color(247,202,255);
 
-  const cZero= [WHITE, WHITE] //Cores atribuidas
-  const cA= [YELLOW ,LIGHT_GREEN, PURPLE, BROWN, PINK];
-  const cB= [YELLOW,  BLUE,  BLUE, PINK, BLUE,  BLUE, ORANGE,  BLUE,  BLUE];
-  const cC= [LIGHT_GREEN, DARK_GREEN, YELLOW, PURPLE, ORANGE, PURPLE, FUSCHIA];
-  const cF= [WHITE, PINK];
+  const cZero= [V_BLUE, WHITE] //Cores atribuidas
+  const cA= [YELLOW ,LIGHT_GREEN, PURPLE, BROWN, MAGENTA];
+  const cB= [YELLOW,  V_BLUE,  V_YELLOW, PINK, V_BLUE,  V_YELLOW, ORANGE,  V_BLUE,  WHITE];
+  const cC= [LIGHT_GREEN, DARK_GREEN, YELLOW, MAGENTA, ORANGE, WHITE, FUSCHIA];
+  const cF= [BLUE, MAGENTA];
   const cG= [DARK_GREEN, BROWN, PEACH, FUSCHIA, LIGHT_GREEN];
   const cK= [YELLOW, LIGHT_GREEN];
   const cL= [DARK_GREEN, YELLOW, LIGHT_GREEN];
-  const cM= [LIGHT_GREEN, LIGHT_GREEN, DARK_GREEN, LIGHT_GREEN, RED, PINK, GREY];
+  const cM= [LIGHT_GREEN, WHITE, DARK_GREEN, MAGENTA, RED, MAGENTA, GREY];
   const cN= [ORANGE];
   const cO= [WHITE, WHITE, ORANGE, ORANGE];
-  const cP= [LIGHT_GREEN,BROWN,PINK,PURPLE,PEACH,PINK,YELLOW,FUSCHIA,WHITE,RED,DARK_GREEN];
+  const cP= [LIGHT_GREEN,BROWN,MAGENTA,PURPLE,PEACH,MAGENTA,YELLOW,FUSCHIA,WHITE,RED,DARK_GREEN];
   const cR= [RED, RED, RED, RED, YELLOW, ORANGE];
-  const cS= [WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, ORANGE, BROWN];
+  const cS= [WHITE, MAGENTA, V_YELLOW, V_YELLOW, V_BLUE,  V_BLUE, ORANGE, BROWN];
   const cT= [RED];
   const cV= [WHITE, RED];
   const cW= [LIGHT_GREEN, BROWN];
@@ -303,22 +304,23 @@ function createTargets(displaycenter_x, displaycenter_y, width, height, big_circ
   for(var i=0; i < NUMBER_CATEGORIES; i++){
   
     let num = num_targets_cat[i];
+    let target_x, target_y;
     for(var j=1; j<=num; j++)
     {
-      let target_x = (0.4* big_circle_size) * 5 + width/2;     
-      let target_y = (0.4* big_circle_size) * Math.floor(i/4) + big_circle_size/2;
+      if (((i)%4)===0||((i)%4)===1){
+        target_x = (0.4* big_circle_size)+width/4;  
+      }
+      else{target_x = (0.4* big_circle_size) * 4 + displaycenter_x*(2/3)+ width/4;}
+      target_y = (0.4* big_circle_size) * Math.floor(i/4) + big_circle_size/2;
       
       switch (num) {
-
-        case 2: // side by side;
-           if (i>3 && i<16) {
-            target_y += 1.5*height*(Math.floor((j-1)%3))-0.5*height
-            break;
-          }  
-          if (i>15 || i<3) {
-            target_x += 1.1*width*((j-1)%2);
-            break;
+        case 1:
+          if (((i)%4)===0||((i)%4)===1){
+          target_x += 1.1*width*((j)%2);
           }
+          break;
+        case 2: // side by side;
+          target_x += 1.1*width*((j-1)%2);
           break;
         case 3: // triangle
           target_y += 1.5*height*(Math.floor((j-1)%3))-1.5*height;
@@ -338,6 +340,9 @@ function createTargets(displaycenter_x, displaycenter_y, width, height, big_circ
           }
           break;
         case 8:
+          target_x += 1.1*width*((j-1)%2);
+          target_y += 1.5*height*(Math.floor((j-1)/2))-3*height;
+          break;
         case 9:
           target_x += 1.1*width*((j-1)%3);
           target_y += 1.5*height*(Math.floor((j-1)/3));
@@ -373,7 +378,7 @@ function createCategories(circle_size, screen_width, screen_height, big_circle_s
     {
       for (var c = 0; c < 4; c++)
       {
-        let cat_x = (0.4* big_circle_size) * c + big_circle_size/2;        // give it some margin from the left border
+        let cat_x = (0.4* big_circle_size) * c + screen_width/3;  // give it some margin from the left border
         let cat_y = (0.4* big_circle_size) * r + big_circle_size/2;
       
       
@@ -404,7 +409,7 @@ function windowResized()
 
     let cat_size    = 2.5;                                // size of category's circle
     let big_circle_size = 7; 
-    let target_width    = 4;                              
+    let target_width    = 3.5;                              
     let target_height    = 2;                          // size of circle that the categories surround
 
     // Creates and positions the UI targets according to the white space defined above (in cm!)
