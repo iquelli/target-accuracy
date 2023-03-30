@@ -2,7 +2,7 @@
 
 class Category
 {
-    constructor(x, y, r, l, t, tgts)
+    constructor(x, y, r, l, t, tgts, c)
     {
         this.x = x;
         this.y = y;
@@ -10,6 +10,7 @@ class Category
         this.label = l;
         this.type = t;  // to know whether to draw it as selected or as unselected circle
         this.targets = tgts;
+      this.c=c;
     }
 
     // Checks if a mouse click took place
@@ -25,22 +26,22 @@ class Category
         {
             case 1:  // not selected
                 // Draw category circle
-                fill(color(125));
+                fill(color((this.c%2+1)*75));
                 circle(this.x, this.y, this.radius);
        
                 // Draw label
-                textFont('Roboto', 40);
+                textFont('Roboto', 32);
                 fill(color(255,255,255));
                 textAlign(CENTER, CENTER);
                 text(this.label, this.x, this.y);
                 break;
             
             case 2:  // selected
-                fill(color(164, 243, 248));
+                fill(color(229,56,45));
                 circle(this.x, this.y, this.radius);
 
                 // Draw label
-                textFont('Roboto', 70);
+                textFont('Roboto', 46);
                 fill(color(255,255,255));
                 textAlign(CENTER, CENTER);
                 text(this.label, this.x, this.y);
