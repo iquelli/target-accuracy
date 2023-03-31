@@ -26,7 +26,7 @@ class Category
         {
             case 1:  // not selected
                 // Draw category circle
-                fill(color((this.c%2+1)*75));
+                fill(color(60,(this.c%2+1)*40, 140));
                 circle(this.x, this.y, this.radius);
        
                 // Draw label

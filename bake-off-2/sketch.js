@@ -307,10 +307,10 @@ function createTargets(displaycenter_x, displaycenter_y, width, height, big_circ
     for(var j=1; j<=num; j++)
     {
       if (((i)%4)===0||((i)%4)===1){
-        target_x = (0.4* big_circle_size)+width/4;  
+        target_x = (0.35* big_circle_size)+1.5*width;  
       }
-      else{target_x = (0.4* big_circle_size) * 4 + displaycenter_x*(2/3)+ width/4;}
-      target_y = (0.4* big_circle_size) * Math.floor(i/4) + big_circle_size/2;
+      else{target_x = (0.35* big_circle_size) * 4 + displaycenter_x*(2/2.75)+ width/3;}
+      target_y = (0.35* big_circle_size) * Math.floor(i/4) + big_circle_size/1.25;
       
       switch (num) {
         case 1:
@@ -377,8 +377,8 @@ function createCategories(circle_size, screen_width, screen_height, big_circle_s
     {
       for (var c = 0; c < 4; c++)
       {
-        let cat_x = (0.4* big_circle_size) * c + screen_width/3;  // give it some margin from the left border
-        let cat_y = (0.4* big_circle_size) * r + big_circle_size/2;
+        let cat_x = (0.35* big_circle_size) * c + screen_width/2.65;  // give it some margin from the left border
+        let cat_y = (0.35* big_circle_size) * r + big_circle_size/1.25;
       
       
         // adds category
@@ -406,10 +406,10 @@ function windowResized()
     let screen_width   = display.width * 2.54;             // screen width
     let screen_height  = display.height * 2.54;            // screen height
 
-    let cat_size    = 2.5;                                // size of category's circle
-    let big_circle_size = 7; 
-    let target_width    = 3.5;                              
-    let target_height    = 2;                          // size of circle that the categories surround
+    let cat_size    = 2;                                // size of category's circle
+    let big_circle_size = 6; 
+    let target_width    = 3;                              
+    let target_height    = 1.5;                          // size of circle that the categories surround
 
     // Creates and positions the UI targets according to the white space defined above (in cm!)
     createTargets(screen_width/2 * PPCM , screen_height/2 * PPCM , target_width*PPCM, target_height*PPCM, big_circle_size * PPCM); // creates targets list
