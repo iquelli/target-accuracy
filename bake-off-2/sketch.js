@@ -289,7 +289,7 @@ function createTargets(displaycenter_x, displaycenter_y, width, height, big_circ
   const cN= [ORANGE];
   const cO= [WHITE, WHITE, ORANGE, ORANGE];
   const cP= [LIGHT_GREEN,BROWN,MAGENTA,PURPLE,PEACH,MAGENTA,YELLOW,FUSCHIA,WHITE,RED,DARK_GREEN];
-  const cR= [RED, RED, RED, RED, YELLOW, ORANGE];
+  const cR= [RED, PEACH, PEACH, RED, YELLOW, ORANGE];
   const cS= [WHITE, MAGENTA, V_YELLOW, V_YELLOW, V_BLUE,  V_BLUE, ORANGE, BROWN];
   const cT= [RED];
   const cV= [WHITE, RED];
