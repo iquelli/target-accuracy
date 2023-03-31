@@ -74,14 +74,9 @@ let num_targets_cat=[2,5,9,7,2,5,2,3,7,1,4,11,6,8,1,2,2,2,1];  // number of targ
 function preload()
 {
   legendas = loadTable('legendas.csv', 'csv', 'header');
-  for (let i = 0; i<NUMBER_TARGETS; i++)
-  {
-    if (i<28 || i>57)
+  for (let i = 0; i<NUMBER_TARGETS; i++) 
     images[i] = loadImage('images/'+i+ '.png');
     
-    else images[i] = loadImage('images/empty.png');
-  }
-
   initial_screen = loadImage('images/initial-screen.png');
 }
 
