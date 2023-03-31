@@ -278,7 +278,7 @@ function continueTest()
   draw_targets = true; 
 }
 
-function createTargets(displaycenter_x, displaycenter_y, width, height, big_circle_size)
+function createTargets(displaycenter_x, displaycenter_y, t_width, t_height, margin, circle_size)
 {
   // Colours
   WHITE = color(255);
@@ -328,56 +328,58 @@ function createTargets(displaycenter_x, displaycenter_y, width, height, big_circ
   
     let num = num_targets_cat[i];
     let target_x, target_y;
+    let k=1;
     for(var j=1; j<=num; j++)
     {
       if (((i)%4)===0||((i)%4)===1){
-        target_x = (0.35* big_circle_size)+1.5*width;  
+        k=-1;
+        target_x = screen_width/2-2.5*margin-2*circle_size-t_width;  
       }
-      else{target_x = (0.35* big_circle_size) * 4 + displaycenter_x*(2/2.75)+ width/3;}
-      target_y = (0.35* big_circle_size) * Math.floor(i/4) + big_circle_size/1.25;
+      else{target_x = screen_width/2+2.5*margin+2*circle_size}
+      target_y = screen_heigth/2-2*margin-2.5*circle_size+(Math.floor(i%4))*(circle_size+margin);
       
       switch (num) {
         case 1:
           if (((i)%4)===0||((i)%4)===1){
-          target_x += 1.1*width*((j)%2);
+          target_x += 1.1*t_width*((j)%2);
           }
           break;
         case 2: // side by side;
           if (((i)%4)===0||((i)%4)===1){
-          target_x += 1.1*width;
+          target_x += 1.1*t_width;
           }
-          else target_x += 1.1*width*(0);
-          target_y += 1.5*height*(Math.floor((j-1)%3))-0.5*height;
+          else target_x += 1.1*t_width*(0);
+          target_y += 1.5*t_height*(Math.floor((j-1)%3))-0.5*t_height;
           break;
         case 3: // triangle
-          target_y += 1.5*height*(Math.floor((j-1)%3))-1.5*height;
+          target_y += 1.5*t_height*(Math.floor((j-1)%3))-1.5*t_height;
           break;
         case 4: // square
-          target_x += 1.1*width*((j-1)%2);
-          target_y += 1.5*height*(Math.floor((j-1)/2))-0.5*height;
+          target_x += 1.1*t_width*((j-1)%2)*k;
+          target_y += 1.5*t_height*(Math.floor((j-1)/2))-0.5*t_height;
           break;
         case 5:
         case 6:
         case 7:
-          target_x += 1.1*width*((j-1)%2);
-          target_y += 1.5*height*(Math.floor((j-1)/2));
+          target_x += 1.1*t_width*((j-1)%2)*k;
+          target_y += 1.5*t_height*(Math.floor((j-1)/2));
           if (i>3){ 
-            target_y-=1.5*height;
-            if (num===7) target_y-=0.5*height;
+            target_y-=1.5*t_height;
+            if (num===7) target_y-=0.5*t_height;
           }
           break;
         case 8:
-          target_x += 1.1*width*((j-1)%2);
-          target_y += 1.5*height*(Math.floor((j-1)/2))-3*height;
+          target_x += 1.1*t_width*((j-1)%2)*k;
+          target_y += 1.5*t_height*(Math.floor((j-1)/2))-3*t_height;
           break;
         case 9:
-          target_x += 1.1*width*((j-1)%3);
-          target_y += 1.5*height*(Math.floor((j-1)/3));
-          if (i>3) target_y-=1.5*height;
+          target_x += 1.1*t_width*((j-1)%3)*k;
+          target_y += 1.5*t_height*(Math.floor((j-1)/3));
+          if (i>3) target_y-=1.5*t_height;
         break;
         case 11:
-          target_x += 1.1*width*((j-1)%3);
-          target_y += 1.5*height*(Math.floor((j-1)/3))-2*height;
+          target_x += 1.1*t_width*((j-1)%3)*k;
+          target_y += 1.5*t_height*(Math.floor((j-1)/3))-2*t_height;
         break;
           
       }
@@ -387,7 +389,7 @@ function createTargets(displaycenter_x, displaycenter_y, width, height, big_circ
 
         let target_label = legendas.getString(label_id, 0);
         
-        let target = new Target(target_x, target_y, width, height,target_label, label_id, col_id, i, images[label_id]);
+        let target = new Target(target_x, target_y, t_width, t_height,target_label, label_id, col_id, i, images[label_id]);
         buffer.push(target);
     }
     targets.push(buffer);
@@ -396,7 +398,7 @@ function createTargets(displaycenter_x, displaycenter_y, width, height, big_circ
 }
 
 // creates an array with all the categories
-function createCategories(circle_size, screen_width, screen_height, big_circle_size)
+function createCategories(circle_size, screen_width, screen_height, margin)
 {
   let i=0;
   while(i<20){
@@ -405,8 +407,8 @@ function createCategories(circle_size, screen_width, screen_height, big_circle_s
     {
       for (var c = 0; c < 4; c++)
       {
-        let cat_x = (0.35* big_circle_size) * c + screen_width/2.65;  // give it some margin from the left border
-        let cat_y = (0.35* big_circle_size) * r + big_circle_size/1.25;
+        let cat_x = (0.35* margin) * c + screen_width/2.65;  // give it some margin from the left border
+        let cat_y = (0.35* margin) * r + margin/1.25;
       
       
         // adds category
@@ -435,13 +437,13 @@ function windowResized()
     let screen_height  = display.height * 2.54;            // screen height
 
     let cat_size    = 2;                                // size of category's circle
-    let big_circle_size = 6; 
+    let margin = 6; 
     let target_width    = 3;                              
     let target_height    = 1.5;                          // size of circle that the categories surround
 
     // Creates and positions the UI targets according to the white space defined above (in cm!)
-    createTargets(screen_width/2 * PPCM , screen_height/2 * PPCM , target_width*PPCM, target_height*PPCM, big_circle_size * PPCM); // creates targets list
-    createCategories(cat_size * PPCM, screen_width * PPCM, screen_height * PPCM, big_circle_size * PPCM);  // creates categories list
+    createTargets(screen_width/2 * PPCM , screen_height/2 * PPCM , target_width*PPCM, target_height*PPCM, margin * PPCM); // creates targets list
+    createCategories(cat_size * PPCM, screen_width * PPCM, screen_height * PPCM, margin * PPCM, cat_size*PPCM);  // creates categories list
 
     // Starts drawing targets immediately after we go fullscreen
     draw_targets = true;
