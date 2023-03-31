@@ -36,9 +36,8 @@ const SELECTED = 2;
 const UNSELECTED = 1;
 let curr_selected_cat = -1;        // current selected category
 var initial_screen;
+var wrong_answer;
 var right_answer;
-var screen_height;
-var screen_width;
 
 // Categories
 const Zero= [38, 53]
@@ -82,6 +81,7 @@ function preload()
     
   initial_screen = loadImage('images/initial-screen.png');
   
+  wrong_answer = loadSound('sounds/wrong-answer.mp3');
   right_answer = loadSound('sounds/right-answer.mp3');
   
 }
@@ -116,19 +116,20 @@ function draw()
     // calculates progress
     let progress = round((current_trial) / 12 * 100);
     
-    // Draw the progress bar
+    // Draw the progress bar background
     fill(255);
-    rect(screen_width/2 - 150, 20, 300, 50, 50);
+    rect(width/2 - 200, 20, 300, 50, 50);
 
+    // Draw the progress bar
     fill(0, 200, 0);
-    rect(screen_width/2 - 150, 20, progress*3, 50, 50);
+    rect(width/2 - 200, 20, progress*3, 50, 50);
+
 
     // Draw all targets and categories
     for (var i = 0; i<NUMBER_CATEGORIES; i++) categories[i].draw();
     
-    // Draws bottow black square
     fill(color(0));
-    rect(screen_width/2-75, screen_height-50, 150, 100);
+    rect(width/2-75, height-50, 150, 100);
 
     // Draw the target label to be selected in the current trial
     textFont('Arial', 20);
@@ -277,7 +278,7 @@ function continueTest()
   draw_targets = true; 
 }
 
-function createTargets(displaycenter_x, displaycenter_y, width, height, margin)
+function createTargets(displaycenter_x, displaycenter_y, t_width, t_height, margin, circle_size)
 {
   // Colours
   WHITE = color(255);
@@ -327,56 +328,58 @@ function createTargets(displaycenter_x, displaycenter_y, width, height, margin)
   
     let num = num_targets_cat[i];
     let target_x, target_y;
+    let k=1;
     for(var j=1; j<=num; j++)
     {
       if (((i)%4)===0||((i)%4)===1){
-        target_x = (0.35* margin)+1.5*width;  
+        k=-1;
+        target_x = screen_width/2+2.5*margin-2*circle_size-t_width;  
       }
-      else{target_x = (0.35* margin) * 4 + displaycenter_x*(2/2.75)+ width/3;}
-      target_y = (0.35* margin) * Math.floor(i/4) + margin/1.25;
+      else{target_x = screen_width/2+2.5*margin-2*circle_size-t_width;}
+      target_y = (0.35* big_circle_size) * Math.floor(i/4) + big_circle_size/1.25;
       
       switch (num) {
         case 1:
           if (((i)%4)===0||((i)%4)===1){
-          target_x += 1.1*width*((j)%2);
+          target_x += 1.1*t_width*((j)%2);
           }
           break;
         case 2: // side by side;
           if (((i)%4)===0||((i)%4)===1){
-          target_x += 1.1*width;
+          target_x += 1.1*t_width;
           }
-          else target_x += 1.1*width*(0);
-          target_y += 1.5*height*(Math.floor((j-1)%3))-0.5*height;
+          else target_x += 1.1*t_width*(0);
+          target_y += 1.5*t_height*(Math.floor((j-1)%3))-0.5*t_height;
           break;
         case 3: // triangle
-          target_y += 1.5*height*(Math.floor((j-1)%3))-1.5*height;
+          target_y += 1.5*t_height*(Math.floor((j-1)%3))-1.5*t_height;
           break;
         case 4: // square
-          target_x += 1.1*width*((j-1)%2);
-          target_y += 1.5*height*(Math.floor((j-1)/2))-0.5*height;
+          target_x += 1.1*t_width*((j-1)%2)*k;
+          target_y += 1.5*t_height*(Math.floor((j-1)/2))-0.5*t_height;
           break;
         case 5:
         case 6:
         case 7:
-          target_x += 1.1*width*((j-1)%2);
-          target_y += 1.5*height*(Math.floor((j-1)/2));
+          target_x += 1.1*t_width*((j-1)%2)*k;
+          target_y += 1.5*t_height*(Math.floor((j-1)/2));
           if (i>3){ 
-            target_y-=1.5*height;
-            if (num===7) target_y-=0.5*height;
+            target_y-=1.5*t_height;
+            if (num===7) target_y-=0.5*t_height;
           }
           break;
         case 8:
-          target_x += 1.1*width*((j-1)%2);
-          target_y += 1.5*height*(Math.floor((j-1)/2))-3*height;
+          target_x += 1.1*t_width*((j-1)%2)*k;
+          target_y += 1.5*t_height*(Math.floor((j-1)/2))-3*t_height;
           break;
         case 9:
-          target_x += 1.1*width*((j-1)%3);
-          target_y += 1.5*height*(Math.floor((j-1)/3));
-          if (i>3) target_y-=1.5*height;
+          target_x += 1.1*t_width*((j-1)%3)*k;
+          target_y += 1.5*t_height*(Math.floor((j-1)/3));
+          if (i>3) target_y-=1.5*t_height;
         break;
         case 11:
-          target_x += 1.1*width*((j-1)%3);
-          target_y += 1.5*height*(Math.floor((j-1)/3))-2*height;
+          target_x += 1.1*t_width*((j-1)%3)*k;
+          target_y += 1.5*t_height*(Math.floor((j-1)/3))-2*t_height;
         break;
           
       }
@@ -386,7 +389,7 @@ function createTargets(displaycenter_x, displaycenter_y, width, height, margin)
 
         let target_label = legendas.getString(label_id, 0);
         
-        let target = new Target(target_x, target_y, width, height,target_label, label_id, col_id, i, images[label_id]);
+        let target = new Target(target_x, target_y, t_width, t_height,target_label, label_id, col_id, i, images[label_id]);
         buffer.push(target);
     }
     targets.push(buffer);
@@ -395,19 +398,18 @@ function createTargets(displaycenter_x, displaycenter_y, width, height, margin)
 }
 
 // creates an array with all the categories
-function createCategories(circle_size, margin)
+function createCategories(circle_size, screen_width, screen_height, big_circle_size)
 {
   let i=0;
   while(i<20){
       // calculates positions
     for (var r = 0; r < 5; r++)
     {
-      let cat_y, cat_x;
-      cat_y = screen_height/2 - (2-r)*circle_size - (2-r)*margin;
-      
       for (var c = 0; c < 4; c++)
       {
-        cat_x = screen_width/2 - (1.5-c)*circle_size - (1.5-c)*margin;
+        let cat_x = (0.35* big_circle_size) * c + screen_width/2.65;  // give it some margin from the left border
+        let cat_y = (0.35* big_circle_size) * r + big_circle_size/1.25;
+      
       
         // adds category
         let category = new Category(cat_x, cat_y, circle_size, catlabels[i], 1, targets[i], r);
@@ -431,17 +433,17 @@ function windowResized()
 
     // Make your decisions in 'cm', so that targets have the same size for all participants
     // Below we find out out white space we can have between 2 cm targets
-    screen_width   = display.width * 2.54 * PPCM;             // screen width
-    screen_height  = display.height * 2.54 * PPCM;            // screen height
+    screen_width   = display.width * 2.54;             // screen width
+    let screen_height  = display.height * 2.54;            // screen height
 
     let cat_size    = 2;                                // size of category's circle
-    let margin = 0.3; 
+    let margin = 6; 
     let target_width    = 3;                              
     let target_height    = 1.5;                          // size of circle that the categories surround
 
     // Creates and positions the UI targets according to the white space defined above (in cm!)
-    createTargets(screen_width/2, screen_height/2, target_width*PPCM, target_height*PPCM, margin * PPCM); // creates targets list
-    createCategories(cat_size * PPCM, margin * PPCM);  // creates categories list
+    createTargets(screen_width/2 * PPCM , screen_height/2 * PPCM , target_width*PPCM, target_height*PPCM, big_circle_size * PPCM); // creates targets list
+    createCategories(cat_size * PPCM, screen_width * PPCM, screen_height * PPCM, margin * PPCM, cat_size*PPCM);  // creates categories list
 
     // Starts drawing targets immediately after we go fullscreen
     draw_targets = true;
