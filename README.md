@@ -1,4 +1,4 @@
-# target-pick
+# target-accuracy
 
 This project consisted in trying to decrease the target selection time in a dense interface of 80 targets.
 
