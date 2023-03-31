@@ -96,12 +96,13 @@ function draw()
   if (draw_targets && attempt < 2)
   {     
     // The user is interacting with the 6x3 target grid
-    background(color(225, 255, 255));        // sets background to white
+    background(color(225, 255, 255));
+            // sets background to white
     
     // Print trial count at the top left-corner of the canvas
     textFont('Helvetica', 16);
-    fill(color(255,255,255));
-    textAlign(RIGHT, BOTTOM);
+    fill(color(0));
+    textAlign(TOP, CENTER);
     text("Trial " + (current_trial + 1) + " of " + trials.length, 50, 20);
 
     // Draw all targets and categories
