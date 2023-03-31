@@ -36,6 +36,8 @@ const SELECTED = 2;
 const UNSELECTED = 1;
 let curr_selected_cat = -1;        // current selected category
 var initial_screen;
+var wrong_answer;
+var right_answer;
 
 // Categories
 const Zero= [38, 53]
@@ -78,6 +80,10 @@ function preload()
     images[i] = loadImage('images/'+i+ '.png');
     
   initial_screen = loadImage('images/initial-screen.png');
+  
+  wrong_answer = loadSound('sounds/wrong-answer.mp3');
+  right_answer = loadSound('sounds/right-answer.mp3');
+  
 }
 
 // Runs once at the start
@@ -99,11 +105,17 @@ function draw()
     background(color(225, 255, 255));
             // sets background to white
     
-    // Print trial count at the top left-corner of the canvas
-    textFont('Helvetica', 16);
-    fill(color(0));
-    textAlign(TOP, CENTER);
-    text("Trial " + (current_trial + 1) + " of " + trials.length, 50, 20);
+    // calculates progress
+    let progress = round((current_trial) / 12 * 100);
+    
+    // Draw the progress bar background
+    fill(255);
+    rect(width/2 - 200, 20, 300, 50, 50);
+
+    // Draw the progress bar
+    fill(0, 200, 0);
+    rect(width/2 - 200, 20, progress*3, 50, 50);
+
 
     // Draw all targets and categories
     for (var i = 0; i<NUMBER_CATEGORIES; i++) categories[i].draw();
@@ -190,8 +202,14 @@ function mousePressed()
         if (targets[curr_selected_cat][j].clicked(mouseX, mouseY)) 
         {
         // Checks if it was the correct target
-          if (targets[curr_selected_cat][j].id === trials[current_trial]) hits++;
-          else misses++;
+          if (targets[curr_selected_cat][j].id === trials[current_trial]) {
+            right_answer.play();
+            hits++;
+          } 
+          else {
+            misses++;
+            wrong_answer.play();
+          }
         
           current_trial++;                 // Move on to the next trial/target
           break;
@@ -403,7 +421,7 @@ function windowResized()
 
     // Make your decisions in 'cm', so that targets have the same size for all participants
     // Below we find out out white space we can have between 2 cm targets
-    let screen_width   = display.width * 2.54;             // screen width
+    screen_width   = display.width * 2.54;             // screen width
     let screen_height  = display.height * 2.54;            // screen height
 
     let cat_size    = 2;                                // size of category's circle
