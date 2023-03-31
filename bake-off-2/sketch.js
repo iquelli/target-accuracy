@@ -105,6 +105,14 @@ function draw()
     background(color(225, 255, 255));
             // sets background to white
     
+    /*
+    // Print trial count at the top left-corner of the canvas
+    textFont('Helvetica', 16);
+    fill(color(0));
+    textAlign(TOP, CENTER);
+    text("Trial " + (current_trial + 1) + " of " + trials.length, 50, 20);
+    */
+    
     // calculates progress
     let progress = round((current_trial) / 12 * 100);
     
@@ -202,14 +210,11 @@ function mousePressed()
         if (targets[curr_selected_cat][j].clicked(mouseX, mouseY)) 
         {
         // Checks if it was the correct target
-          if (targets[curr_selected_cat][j].id === trials[current_trial]) {
-            right_answer.play();
-            hits++;
-          } 
-          else {
+          if (targets[curr_selected_cat][j].id === trials[current_trial]) hits++;
+          else
             misses++;
-            wrong_answer.play();
-          }
+
+          right_answer.play();
         
           current_trial++;                 // Move on to the next trial/target
           break;
@@ -294,6 +299,7 @@ function createTargets(displaycenter_x, displaycenter_y, width, height, big_circ
   PURPLE = color(220,201,255);
   BROWN = color(242,226,214);
   FUSCHIA = color(247,202,255);
+  DARK_ORANGE = color(255,140,0);
 
   const cZero= [V_BLUE, WHITE] //Cores atribuidas
   const cA= [YELLOW ,LIGHT_GREEN, PURPLE, BROWN, MAGENTA];
@@ -303,10 +309,10 @@ function createTargets(displaycenter_x, displaycenter_y, width, height, big_circ
   const cG= [DARK_GREEN, BROWN, PEACH, FUSCHIA, LIGHT_GREEN];
   const cK= [YELLOW, LIGHT_GREEN];
   const cL= [DARK_GREEN, YELLOW, LIGHT_GREEN];
-  const cM= [LIGHT_GREEN, WHITE, DARK_GREEN, MAGENTA, RED, MAGENTA, GREY];
+  const cM= [LIGHT_GREEN, WHITE, DARK_GREEN, MAGENTA, RED, DARK_ORANGE, GREY];
   const cN= [ORANGE];
-  const cO= [WHITE, WHITE, ORANGE, ORANGE];
-  const cP= [LIGHT_GREEN,BROWN,MAGENTA,PURPLE,PEACH,MAGENTA,YELLOW,FUSCHIA,WHITE,RED,DARK_GREEN];
+  const cO= [V_BLUE, WHITE, ORANGE, DARK_ORANGE];
+  const cP= [LIGHT_GREEN,BROWN,MAGENTA,PURPLE,PEACH,DARK_ORANGE,YELLOW,FUSCHIA,WHITE,RED,DARK_GREEN];
   const cR= [RED, PEACH, PEACH, RED, YELLOW, ORANGE];
   const cS= [WHITE, MAGENTA, V_YELLOW, V_YELLOW, V_BLUE,  V_BLUE, ORANGE, BROWN];
   const cT= [RED];
@@ -337,7 +343,11 @@ function createTargets(displaycenter_x, displaycenter_y, width, height, big_circ
           }
           break;
         case 2: // side by side;
-          target_x += 1.1*width*((j-1)%2);
+          if (((i)%4)===0||((i)%4)===1){
+          target_x += 1.1*width;
+          }
+          else target_x += 1.1*width*(0);
+          target_y += 1.5*height*(Math.floor((j-1)%3))-0.5*height;
           break;
         case 3: // triangle
           target_y += 1.5*height*(Math.floor((j-1)%3))-1.5*height;
