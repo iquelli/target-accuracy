@@ -289,7 +289,7 @@ function createTargets(displaycenter_x, displaycenter_y, t_width, t_height, marg
   BLACK = color(0);
   GREY = color(215,215,215);
   GREY2= color(155)
-  BLUE = color(135, 213, 255);
+  BLUE = color(165, 223, 255);
   V_BLUE = color(24, 223, 255);
   MAGENTA = color(224,95,255);
   V_YELLOW = color(255,233,36);
