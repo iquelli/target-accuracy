@@ -54,7 +54,7 @@ const N= [15];
 const O= [44, 43, 16, 29];
 const P= [17, 18, 30, 24, 19, 32, 23, 2, 56, 70, 25];
 const R= [75, 3, 26, 73, 69, 4];
-const S= [46, 35, 49, 51, 47, 40, 27, 74];
+const S= [46, 35, 51, 49, 47, 40, 27, 74];
 const T= [77];
 const V= [57, 78];
 const W= [14, 72];
@@ -289,7 +289,7 @@ function createTargets(displaycenter_x, displaycenter_y, t_width, t_height, marg
   BLACK = color(0);
   GREY = color(215,215,215);
   GREY2= color(155)
-  BLUE = color(115, 213, 255);
+  BLUE = color(135, 213, 255);
   V_BLUE = color(24, 223, 255);
   MAGENTA = color(224,95,255);
   V_YELLOW = color(255,233,36);
@@ -307,7 +307,7 @@ function createTargets(displaycenter_x, displaycenter_y, t_width, t_height, marg
 
   const cZero= [V_BLUE, WHITE] //Cores atribuidas
   const cA= [YELLOW ,LIGHT_GREEN, PURPLE, BROWN, MAGENTA];
-  const cB= [YELLOW,  V_BLUE,  V_YELLOW, PINK, V_BLUE,  V_YELLOW, ORANGE,  V_BLUE,  WHITE];
+  const cB= [YELLOW,  V_BLUE,  WHITE, PINK, BLUE,  V_YELLOW, ORANGE,  V_BLUE,  WHITE];
   const cC= [LIGHT_GREEN, DARK_GREEN, YELLOW, MAGENTA, ORANGE, WHITE, FUSCHIA];
   const cF= [V_BLUE, MAGENTA];
   const cG= [DARK_GREEN, BROWN, PEACH, FUSCHIA, LIGHT_GREEN];
@@ -318,7 +318,7 @@ function createTargets(displaycenter_x, displaycenter_y, t_width, t_height, marg
   const cO= [V_BLUE, WHITE, ORANGE, DARK_ORANGE];
   const cP= [LIGHT_GREEN,BROWN,MAGENTA,PURPLE,PEACH,DARK_ORANGE,YELLOW,FUSCHIA,WHITE,RED,DARK_GREEN];
   const cR= [RED, PEACH, PEACH, RED, YELLOW, ORANGE];
-  const cS= [WHITE, MAGENTA, V_YELLOW, V_YELLOW, V_BLUE,  V_BLUE, ORANGE, BROWN];
+  const cS= [WHITE, MAGENTA, V_YELLOW, WHITE, V_BLUE,  V_BLUE, ORANGE, BROWN];
   const cT= [RED];
   const cV= [WHITE, RED];
   const cW= [LIGHT_GREEN, BROWN];
