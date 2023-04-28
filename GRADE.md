@@ -1,6 +1,6 @@
-- Designing Process - ?/10
-- Speed Rate - ?/10
+- Designing Process - 9.88/10
+- Speed Rate - 8/10
 
 ___
 
-- FINAL GRADE: ??/20
+- FINAL GRADE: 18/20
